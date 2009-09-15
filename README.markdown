@@ -4,12 +4,15 @@ Compaction aims to provide reusable solutions to common problems that developers
 
 # Smart Forms
 
+### Managed Forms
 ![Automatically disable forms when not editing.](http://www.compactcode.com/wp-content/uploads/2009/09/notediting.png)
+### Managed Buttons
 ![Automatically disable buttons when no changes have been made.](http://www.compactcode.com/wp-content/uploads/2009/09/notchanged.png)
 ![Automatically disable buttons when validators have failed.](http://www.compactcode.com/wp-content/uploads/2009/09/notvalid.png)
+### Asynchronous Operations
 ![Provide progress indicators for long running operations.](http://www.compactcode.com/wp-content/uploads/2009/09/saving.png)
 
-# Easy Validation
+# Powerful Validation
 
     public class CustomerValidator implements IValidator {
         public function validate(item:Object, builder:IValidationBuilder): void {
@@ -22,4 +25,17 @@ Compaction aims to provide reusable solutions to common problems that developers
 
 # Simple Binding
 
+    <model:EditModel id="model" />
+    <mx:Form id="editForm" width="100%" defaultButton="{saveButton}">
+        <mx:FormItem label="Name">
+            <mx:TextInput id="nameInput" />
+        </mx:FormItem>
+        <mx:FormItem label="Email">
+            <mx:TextInput id="emailInput" />
+        </mx:FormItem>
+        <mx:FormItem direction="horizontal">
+            <mx:Button id="saveButton" label="Save"/>
+            <mx:Button id="cancelButton" label="Cancel" />
+        </mx:FormItem>
+    </mx:Form>
     <binder:FormBinder source="{model}" target="{editForm}" />
