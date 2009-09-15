@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Application 
+	xmlns:mx="http://www.adobe.com/2006/mxml"
+	xmlns:flexunit="flexunit.flexui.*"
+	creationComplete="onCreationComplete()">
+	
+	<mx:Script>
+		<![CDATA[
+			import org.compaction.utils.ObjectUtilsTest;
+			import org.compaction.utils.StringUtilsTest;
+			import org.compaction.binder.BinderFactoryTest;
+			import org.compaction.binder.FormBinderTest;
+			import org.compaction.binder.DateBinderTest;
+			import org.compaction.binder.TextBinderTest;
+			import org.compaction.binder.ActionBinderTest;
+			import org.compaction.validation.impl.DateValidationBuilderTest;
+			import org.compaction.validation.ValidationRoutinesTest;
+			import org.compaction.validation.ValidationMessagesTest;
+			import org.compaction.binder.ValidationBinderTest;
+			import org.compaction.validation.impl.ValidatorAdapterTest;
+			import org.compaction.validation.impl.ValidationBuilderTest;
+			import org.compaction.validation.impl.ValidationBuilderFactoryTest;
+			import org.compaction.validation.impl.StringValidationBuilderTest;
+			import org.compaction.action.SimpleActionTest;
+			import org.compaction.validation.impl.NumberValidationBuilderTest;
+			import org.compaction.condition.NotConditionTest;
+			import org.compaction.action.ItemActionTest;
+			import org.compaction.model.EditModelTest;
+			import org.compaction.detector.CloningChangeDetectorTest;
+			import org.compaction.condition.ConditionTest;
+			import org.compaction.utils.CollectionUtilsTest;
+			import org.compaction.validation.impl.AbstractValidationBuilderTest;
+			import org.compaction.action.AbstractActionTest;
+			import flexunit.framework.TestSuite;
+			
+			// Create the test suite and run the tests
+			private function onCreationComplete(): void {
+  				testRunner.test = createSuite();
+  				testRunner.startTest();
+  			}
+			
+			// Creates the test suite to run
+			private function createSuite():TestSuite {
+  				var testSuite:TestSuite = new TestSuite();
+  				testSuite.addTestSuite(AbstractActionTest);
+  				testSuite.addTestSuite(AbstractValidationBuilderTest);
+  				testSuite.addTestSuite(ActionBinderTest);
+  				testSuite.addTestSuite(BinderFactoryTest);
+  				testSuite.addTestSuite(CollectionUtilsTest);
+  				testSuite.addTestSuite(ConditionTest);
+  				testSuite.addTestSuite(CloningChangeDetectorTest);
+  				testSuite.addTestSuite(DateBinderTest);
+  				testSuite.addTestSuite(DateValidationBuilderTest);
+  				testSuite.addTestSuite(EditModelTest);
+  				testSuite.addTestSuite(FormBinderTest);
+  				testSuite.addTestSuite(ItemActionTest);
+  				testSuite.addTestSuite(NotConditionTest);
+  				testSuite.addTestSuite(NumberValidationBuilderTest);
+  				testSuite.addTestSuite(ObjectUtilsTest);
+  				testSuite.addTestSuite(TextBinderTest);
+  				testSuite.addTestSuite(SimpleActionTest);
+  				testSuite.addTestSuite(StringUtilsTest);
+  				testSuite.addTestSuite(StringValidationBuilderTest);
+  				testSuite.addTestSuite(ValidationBuilderFactoryTest);
+  				testSuite.addTestSuite(ValidationBuilderTest);
+  				testSuite.addTestSuite(ValidatorAdapterTest);
+  				testSuite.addTestSuite(ValidationBinderTest);
+  				testSuite.addTestSuite(ValidationMessagesTest);
+  				testSuite.addTestSuite(ValidationRoutinesTest);
+  				return testSuite;
+  			}	
+		]]>
+	</mx:Script>
+	<flexunit:TestRunnerBase id="testRunner" width="100%" height="100%" />	
+	
+</mx:Application>
