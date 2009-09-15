@@ -4,7 +4,8 @@ package org.compaction.validation {
 	/**
 	 * The validation builder provides a means to collect and filter validation errors by key. 
 	 * 
-	 * It is also designed to provide easy access to a large number of validation routines and error messages.
+	 * It is also designed to provide easy access to a large number of validation routines and 
+	 * error messages.
 	 * 
 	 * @author shanonmcquay
 	 */
@@ -73,13 +74,15 @@ package org.compaction.validation {
 		function errorsByKey(key:String):ListCollectionView;
 		
 		/**
-		 * Return a list of error messages that have been added using the given key, transformed into ValidationResults.
+		 * Return a list of error messages that have been added using the given key, 
+		 * transformed into ValidationResults.
 		 * @return A list of ValidationResults.
 		 */
 		function resultsByKey(key:String):ListCollectionView;
 		
 		/**
-		 * Return a list of error messages that have been added using the given key, transformed into ValidationResults.
+		 * Return a list of error messages that have been added using the given key, 
+		 * transformed into ValidationResults.
 		 * @return A list of ValidationResults.
 		 */
 		function resultsAsArrayByKey(key:String):Array;
