@@ -4,12 +4,13 @@ Compaction aims to provide reusable solutions to common problems that developers
 
 # Smart Forms
 
-### Managed Forms
+#### Useful Feedback
 ![Automatically disable forms when not editing.](http://www.compactcode.com/wp-content/uploads/2009/09/notediting.png)
-### Managed Buttons
+#### Automatic Dirty Checking
 ![Automatically disable buttons when no changes have been made.](http://www.compactcode.com/wp-content/uploads/2009/09/notchanged.png)
+#### Form Validation
 ![Automatically disable buttons when validators have failed.](http://www.compactcode.com/wp-content/uploads/2009/09/notvalid.png)
-### Asynchronous Operations
+#### Asynchronous Support
 ![Provide progress indicators for long running operations.](http://www.compactcode.com/wp-content/uploads/2009/09/saving.png)
 
 # Powerful Validation
