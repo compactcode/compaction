@@ -6,12 +6,12 @@ Compaction aims to provide reusable solutions to common problems that developers
 
 <table width="100%">
   <tr>
-    <td width="50%"><img src="http://www.compactcode.com/wp-content/uploads/2009/09/notediting.png"/></td>
-    <td width="50%"><img src="http://www.compactcode.com/wp-content/uploads/2009/09/notchanged.png"/></td>
+    <td width="50%" align="center"><img src="http://www.compactcode.com/wp-content/uploads/2009/09/notediting.png"/></td>
+    <td width="50%" align="center"><img src="http://www.compactcode.com/wp-content/uploads/2009/09/notchanged.png"/></td>
   </tr>
   <tr>
-    <td width="50%"><img src="http://www.compactcode.com/wp-content/uploads/2009/09/notvalid.png"/></td>
-    <td width="50%"><img src="http://www.compactcode.com/wp-content/uploads/2009/09/saving.png"/></td>
+    <td width="50%" align="center"><img src="http://www.compactcode.com/wp-content/uploads/2009/09/notvalid.png"/></td>
+    <td width="50%" align="center"><img src="http://www.compactcode.com/wp-content/uploads/2009/09/saving.png"/></td>
   </tr>
 </table>
 
