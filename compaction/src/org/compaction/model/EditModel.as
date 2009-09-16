@@ -145,8 +145,8 @@ package org.compaction.model {
 				} catch (e:Error) {
 					throw new Error(_resourceManager.getString("compaction", "bindableRequired"));
 				}
-				_edited = value;
 			}
+			_edited = value;
 			
 			setEditing(_edited != null);
 			

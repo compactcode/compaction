@@ -31,6 +31,11 @@ package org.compaction.model {
 			_model.edit.execute(new BindableCustomer());
 			assertEquals(true, _model.editing.currentValue);
 		}
+		public function testEditingIsFalseAfterEditingNotNullThenNullObject(): void {
+			_model.edit.execute(new BindableCustomer());
+			_model.edit.execute(null);
+			assertEquals(false, _model.editing.currentValue);
+		}
 		
 		// --- Changed Condition
 		
