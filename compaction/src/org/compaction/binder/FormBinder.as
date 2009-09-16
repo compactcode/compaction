@@ -1,6 +1,7 @@
 package org.compaction.binder {
 	
 	import flash.display.DisplayObject;
+	import flash.events.Event;
 	
 	import mx.containers.Form;
 	import mx.controls.Button;
@@ -44,15 +45,20 @@ package org.compaction.binder {
 		private function bindSourceToTarget(): void {
 			if(_source && _target) {
 				if(_target.initialized) {
-					examineAllChildren(_target);
+					bindInitializedSourceToTarget();
 				} else {
-					_target.addEventListener(FlexEvent.CREATION_COMPLETE, examineWhenInitialized);
+					_target.addEventListener(FlexEvent.CREATION_COMPLETE, bindInitializedSourceToTarget);
 				}
 			}
 		}
-		private function examineWhenInitialized(ignored:Object=null): void {
+		private function bindInitializedSourceToTarget(e:Event=null): void {
+			_target.removeEventListener(FlexEvent.CREATION_COMPLETE, bindInitializedSourceToTarget);
+			
+			var binder:ConditionBinder = binderFactory.newConditionBinder();
+			binder.source = _source.editing;
+			binder.target = _target;
+			
 			examineAllChildren(_target);
-			_target.removeEventListener(FlexEvent.CREATION_COMPLETE, examineWhenInitialized);
 		}
 		private function examineAllChildren(container:Container): void {
 			container.getChildren().forEach(function(item:DisplayObject, index:int, array:Array): void {

@@ -6,6 +6,7 @@
 	
 	<mx:Script>
 		<![CDATA[
+			import org.compaction.binder.ConditionBinderTest;
 			import org.compaction.utils.ObjectUtilsTest;
 			import org.compaction.utils.StringUtilsTest;
 			import org.compaction.binder.BinderFactoryTest;
@@ -47,6 +48,7 @@
   				testSuite.addTestSuite(ActionBinderTest);
   				testSuite.addTestSuite(BinderFactoryTest);
   				testSuite.addTestSuite(CollectionUtilsTest);
+  				testSuite.addTestSuite(ConditionBinderTest);
   				testSuite.addTestSuite(ConditionTest);
   				testSuite.addTestSuite(CloningChangeDetectorTest);
   				testSuite.addTestSuite(DateBinderTest);

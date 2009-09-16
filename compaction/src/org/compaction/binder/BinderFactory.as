@@ -18,5 +18,8 @@ package org.compaction.binder {
 		public function newValidationBinder(): ValidationBinder {
 			return new ValidationBinder();
 		}
+		public function newConditionBinder(): ConditionBinder {
+			return new ConditionBinder();
+		}
 	}
 }

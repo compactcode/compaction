@@ -19,8 +19,9 @@ package org.compaction.binder {
 		private var _dateBinder:DateBinder;
 		private var _textBinder:TextBinder;
 		private var _validationBinder:ValidationBinder;
+		private var _conditionBinder:ConditionBinder;
 		public function FormBinderTest() {
-			super([ActionBinder, DateBinder, TextBinder, ValidationBinder, BinderFactory]);
+			super([ActionBinder, ConditionBinder, DateBinder, TextBinder, ValidationBinder, BinderFactory]);
 		}
 		override public function setUp():void {
 			_source = new EditModel();
@@ -29,11 +30,13 @@ package org.compaction.binder {
 			
 			_factory = mock(BinderFactory);
 			_actionBinder = mock(ActionBinder);
+			_conditionBinder = mock(ConditionBinder);
 			_dateBinder = mock(DateBinder);
 			_textBinder = mock(TextBinder);
 			_validationBinder = mock(ValidationBinder);
 			
 			given(_factory.newActionBinder()).willReturn(_actionBinder);
+			given(_factory.newConditionBinder()).willReturn(_conditionBinder);
 			given(_factory.newDateBinder()).willReturn(_dateBinder);
 			given(_factory.newTextBinder()).willReturn(_textBinder);
 			given(_factory.newValidationBinder()).willReturn(_validationBinder);
@@ -123,6 +126,13 @@ package org.compaction.binder {
 			verify().that(_validationBinder.source = _source.adapter);
 			verify().that(_validationBinder.key = "birth");
 			verify().that(_validationBinder.target = input);
+		}
+		public function testTargetIsBoundToEditingCondition(): void {
+			_binder.source = _source;
+			_binder.target = _target;
+			
+			verify().that(_conditionBinder.source = _source.editing);
+			verify().that(_conditionBinder.target = _target);
 		}
 		private function button(id:String):Button {
 			return setId(id, new Button());
