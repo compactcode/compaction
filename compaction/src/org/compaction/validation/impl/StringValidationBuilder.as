@@ -11,5 +11,17 @@ package org.compaction.validation.impl {
 			}
 			return this;
 		}
+		public function minLength(limit:int): IStringValidationBuilder {
+			if(value && routines.lessThan(limit, value.length)) {
+				addError(messages.wasLowerThanMin());
+			}
+			return this;
+		}
+		public function maxLength(limit:int): IStringValidationBuilder {
+			if(value && routines.greaterThan(limit, value.length)) {
+				addError(messages.wasGreaterThanMax());
+			}
+			return this;
+		}
 	}
 }
