@@ -46,7 +46,7 @@ package org.compaction.validation.impl {
 		
 		public function testMinLengthAddsErrorIfRoutineFails(): void {
 			given(_routines.lessThan(4, 3)).willReturn(true);
-			given(_messages.wasLowerThanMin()).willReturn("lowerthanmin");
+			given(_messages.wasLowerThanCharacterMin(4)).willReturn("lowerthanmin");
 			_builder = new StringValidationBuilder("foo", _parent, "key");
 			_builder.minLength(4);
 			verify().that(_parent.addError("lowerthanmin", "key"));
@@ -61,7 +61,7 @@ package org.compaction.validation.impl {
 			_builder = new StringValidationBuilder(null, _parent, "key");
 			_builder.minLength(2);
 			verify(never()).that(_routines.lessThan(any(), any()));
-			verify(never()).that(_messages.wasLowerThanMin());
+			verify(never()).that(_messages.wasLowerThanCharacterMin(any()));
 		}
 		public function testMinLengthIsFluent(): void {
 			_builder = new StringValidationBuilder(null, _parent, null);
@@ -72,7 +72,7 @@ package org.compaction.validation.impl {
 		
 		public function testMaxLengthAddsErrorIfRoutineFails(): void {
 			given(_routines.greaterThan(2, 3)).willReturn(true);
-			given(_messages.wasGreaterThanMax()).willReturn("greaterthanmax");
+			given(_messages.wasGreaterThanCharacterMax(2)).willReturn("greaterthanmax");
 			_builder = new StringValidationBuilder("foo", _parent, "key");
 			_builder.maxLength(2);
 			verify().that(_parent.addError("greaterthanmax", "key"));
@@ -87,11 +87,96 @@ package org.compaction.validation.impl {
 			_builder = new StringValidationBuilder(null, _parent, "key");
 			_builder.maxLength(2);
 			verify(never()).that(_routines.greaterThan(any(), any()));
-			verify(never()).that(_messages.wasGreaterThanMax());
+			verify(never()).that(_messages.wasGreaterThanCharacterMax(any()));
 		}
 		public function testMaxLengthIsFluent(): void {
 			_builder = new StringValidationBuilder(null, _parent, null);
-			assertEquals(_builder, _builder.maxLength(2))
+			assertEquals(_builder, _builder.maxLength(2));
 		}
+		
+		// -- Valid Email
+		
+		public function testValidEmailAddsErrorIfNoAtSign(): void {
+			given(_routines.notEmpty(any())).willReturn(true);
+			
+			given(_routines.contains("@", "foo")).willReturn(false);
+			given(_messages.wasMissingAtSign()).willReturn("noatsign");
+			
+			_builder = new StringValidationBuilder("foo", _parent, "key");
+			_builder.validEmail();
+			
+			verify().that(_parent.addError("noatsign", "key"));
+		}
+		public function testValidEmailAddsErrorIfTooManyAtSigns(): void {
+			given(_routines.notEmpty(any())).willReturn(true);
+			
+			given(_routines.contains("@", "@foo@")).willReturn(true);
+			given(_routines.containsOccurances("@", "@foo@", 1)).willReturn(false);
+			given(_messages.wasTooManyAtSigns()).willReturn("toomanyatsign");
+			
+			_builder = new StringValidationBuilder("@foo@", _parent, "key");
+			_builder.validEmail();
+			
+			verify().that(_parent.addError("toomanyatsign", "key"));
+		}
+		public function testValidEmailAddsErrorIfNothingLeftOfAtSign(): void {
+			given(_routines.notEmpty(any())).willReturn(true);
+			
+			given(_routines.contains("@", "@a")).willReturn(true);
+			given(_routines.containsOccurances("@", "@a", 1)).willReturn(true);
+			given(_routines.containsAnythingLeftOf("@", "@a")).willReturn(false);
+			
+			given(_messages.wasMissingUserName()).willReturn("missinguser");
+			
+			_builder = new StringValidationBuilder("@a", _parent, "key");
+			_builder.validEmail();
+			
+			verify().that(_parent.addError("missinguser", "key"));
+		}
+		public function testValidEmailAddsErrorIfNoDotRightOfAtSign(): void {
+			given(_routines.notEmpty(any())).willReturn(true);
+			
+			given(_routines.contains("@", "@a")).willReturn(true);
+			given(_routines.containsOccurances("@", "@a", 1)).willReturn(true);
+			given(_routines.containsAnythingLeftOf("@", "@a")).willReturn(true);
+			given(_routines.containsTokensInOrder("@", ".", "@a")).willReturn(false);
+			
+			given(_messages.wasMissingPeriodInDomain()).willReturn("missingperiod");
+			
+			_builder = new StringValidationBuilder("@a", _parent, "key");
+			_builder.validEmail();
+			
+			verify().that(_parent.addError("missingperiod", "key"));
+		}
+		public function testValidEmailDoesNothingIfNoRoutinesFail(): void {
+			given(_routines.notEmpty(any())).willReturn(true);
+			
+			given(_routines.contains("@", "a@a.com")).willReturn(true);
+			given(_routines.containsOccurances("@", "a@a.com", 1)).willReturn(true);
+			given(_routines.containsAnythingLeftOf("@", "a@a.com")).willReturn(true);
+			given(_routines.containsTokensInOrder("@", ".", "a@a.com")).willReturn(true);
+			
+			_builder = new StringValidationBuilder("a@a.com", _parent, "key");
+			_builder.validEmail();
+			
+			verify(never()).that(_parent.addError(any(), any()));
+		}
+		public function testValidEmailDoesNotValidateIfValueIsEmpty() : void {
+			given(_routines.notEmpty(any())).willReturn(false);
+			
+			_builder = new StringValidationBuilder("", _parent, "key");
+			_builder.validEmail();
+			
+			verify(never()).that(_routines.contains(any(), any()));
+			verify(never()).that(_messages.wasMissingAtSign());
+			
+			verify(never()).that(_routines.containsOccurances(any(), any(), any()));
+			verify(never()).that(_messages.wasTooManyAtSigns());
+		}
+		public function testValidEmailIsFluent(): void {
+			_builder = new StringValidationBuilder(null, _parent, null);
+			assertEquals(_builder, _builder.validEmail());
+		}
+		
 	}
 }

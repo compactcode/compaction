@@ -14,7 +14,7 @@ package org.compaction.validation {
 		 * 
 		 * Null values are ignored.
 		 * 
-		 * @param limit The string length must be greater than this value.
+		 * @param limit The string length must be greater than or equal to this value.
 		 */
 		function minLength(limit:int): IStringValidationBuilder;
 		/**
@@ -22,8 +22,14 @@ package org.compaction.validation {
 		 * 
 		 * Null values are ignored.
 		 * 
-		 * @param limit The string length must be less than this value.
+		 * @param limit The string length must be less than or equal to this value.
 		 */
 		function maxLength(limit:int): IStringValidationBuilder;
+		/**
+		 * Adds a validation error if the string is not a valid email address.
+		 * 
+		 * Null and Empty values are ignored.
+		 */
+		function validEmail(): IStringValidationBuilder;
 	}
 }

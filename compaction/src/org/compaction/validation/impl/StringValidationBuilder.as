@@ -1,4 +1,6 @@
 package org.compaction.validation.impl {
+	import mx.validators.EmailValidator;
+	
 	import org.compaction.validation.IStringValidationBuilder;
 	import org.compaction.validation.IValidationBuilder;
 	public class StringValidationBuilder extends AbstractValidationBuilder implements IStringValidationBuilder {
@@ -11,15 +13,29 @@ package org.compaction.validation.impl {
 			}
 			return this;
 		}
-		public function minLength(limit:int): IStringValidationBuilder {
-			if(value && routines.lessThan(limit, value.length)) {
-				addError(messages.wasLowerThanMin());
+		public function minLength(min:int): IStringValidationBuilder {
+			if(value && routines.lessThan(min, value.length)) {
+				addError(messages.wasLowerThanCharacterMin(min));
 			}
 			return this;
 		}
-		public function maxLength(limit:int): IStringValidationBuilder {
-			if(value && routines.greaterThan(limit, value.length)) {
-				addError(messages.wasGreaterThanMax());
+		public function maxLength(max:int): IStringValidationBuilder {
+			if(value && routines.greaterThan(max, value.length)) {
+				addError(messages.wasGreaterThanCharacterMax(max));
+			}
+			return this;
+		}
+		public function validEmail(): IStringValidationBuilder {
+			if(routines.notEmpty(value)) {
+				if(!routines.contains("@", value)) {
+					addError(messages.wasMissingAtSign());
+				} else if(!routines.containsOccurances("@", value, 1)) {
+					addError(messages.wasTooManyAtSigns());
+				} else if(!routines.containsAnythingLeftOf("@", value)) {
+					addError(messages.wasMissingUserName());
+				} else if(!routines.containsTokensInOrder("@", ".", value)) {
+					addError(messages.wasMissingPeriodInDomain());
+				}
 			}
 			return this;
 		}

@@ -25,24 +25,86 @@ package org.compaction.validation.impl {
 			given(_parent.messages).willReturn(_messages);
 		}
 		
+		// -- Before Today
+		
 		public function testBeforeTodayAddsErrorIfRoutineFails(): void {
 			var testDate:Date = new Date();
 			given(_routines.afterToday(testDate)).willReturn(true);
 			given(_messages.wasAfterToday()).willReturn("foorequired");
 			_builder = new DateValidationBuilder(testDate, _parent, "key");
-			_builder.beforeToday();
+			_builder.onOrBeforeToday();
 			verify().that(_parent.addError("foorequired", "key"));
 		}
 		public function testBeforeTodayDoesNothingIfRoutinePasses(): void {
 			var testDate:Date = new Date();
 			given(_routines.afterToday(testDate)).willReturn(false);
 			_builder = new DateValidationBuilder(testDate, _parent, "key");
-			_builder.beforeToday();
+			_builder.onOrBeforeToday();
 			verify(never()).that(_parent.addError(any(), any()));
 		}
 		public function testBeforeTodayIsFluent(): void {
 			_builder = new DateValidationBuilder(new Date(), _parent, "key");
-			assertEquals(_builder, _builder.beforeToday())
+			assertEquals(_builder, _builder.onOrBeforeToday());
+		}
+		
+		// -- Before
+		
+		public function testBeforeAddsErrorIfRoutineFails(): void {
+			var tomorrow:Date = new Date();
+			var today:Date = new Date();
+			
+			given(_routines.after(today, tomorrow)).willReturn(true);
+			given(_messages.wasAfter(today)).willReturn("after");
+			
+			_builder = new DateValidationBuilder(tomorrow, _parent, "key");
+			_builder.onOrBefore(today);
+			
+			verify().that(_parent.addError("after", "key"));
+		}
+		public function testBeforeDoesNothingIfRoutinePasses(): void {
+			var tomorrow:Date = new Date();
+			var today:Date = new Date();
+			
+			given(_routines.after(tomorrow, today)).willReturn(false);
+			
+			_builder = new DateValidationBuilder(today, _parent, "key");
+			_builder.onOrBefore(tomorrow);
+			
+			verify(never()).that(_parent.addError(any(), any()));
+		}
+		public function testBeforeIsFluent(): void {
+			_builder = new DateValidationBuilder(new Date(), _parent, "key");
+			assertEquals(_builder, _builder.onOrBefore(null));
+		}
+		
+		// -- Ater
+		
+		public function testAfterAddsErrorIfRoutineFails(): void {
+			var today:Date = new Date();
+			var tommorrow:Date = new Date();
+			
+			given(_routines.before(tommorrow, today)).willReturn(true);
+			given(_messages.wasBefore(tommorrow)).willReturn("before");
+			
+			_builder = new DateValidationBuilder(today, _parent, "key");
+			_builder.onOrAfter(tommorrow);
+			
+			verify().that(_parent.addError("before", "key"));
+		}
+		public function testAfterDoesNothingIfRoutinePasses(): void {
+			var today:Date = new Date();
+			var tommorrow:Date = new Date();
+			
+			given(_routines.before(today, tommorrow)).willReturn(false);
+			
+			_builder = new DateValidationBuilder(tommorrow, _parent, "key");
+			_builder.onOrAfter(today);
+			
+			verify(never()).that(_parent.addError(any(), any()));
+		}
+		public function testAfterIsFluent(): void {
+			_builder = new DateValidationBuilder(new Date(), _parent, "key");
+			assertEquals(_builder, _builder.onOrAfter(null));
 		}
 		
 	}
