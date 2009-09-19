@@ -1,32 +1,31 @@
 package org.compaction.binder {
-	import flash.events.MouseEvent;
-	
 	import flexunit.framework.TestCase;
 	
-	import mx.controls.Button;
+	import mx.controls.List;
+	import mx.events.ListEvent;
 	
 	import org.compaction.InvocationRecorder;
-	import org.compaction.action.ISimpleAction;
-	import org.compaction.action.SimpleAction;
+	import org.compaction.action.ItemAction;
 	import org.compaction.condition.Condition;
 	
-	public class ActionBinderTest extends TestCase {
-		private var _binder:ActionBinder;
-		private var _source:ISimpleAction;
+	public class ListBinderTest extends TestCase {
+		private var _binder:ListBinder;
+		private var _source:ItemAction;
 		private var _recorder:InvocationRecorder;
-		private var _target:Button;
+		private var _target:List;
 		override public function setUp():void {
 			_recorder = new InvocationRecorder();
-			_source = new SimpleAction(_recorder.invocationRecorder);
-			_target = new Button();
+			
+			_source = new ItemAction(_recorder.invocationRecorder);
+			_target = new List();
 			_target.initialize();
 			
-			_binder = new ActionBinder();
+			_binder = new ListBinder();
 		}
-		public function testSettingSourceDoesNothing(): void {
+		public function testSettingSourceAloneDoesNothing(): void {
 			_binder.source = _source;
 		}
-		public function testSettingTargetDoesNothing(): void {
+		public function testSettingTargetAloneDoesNothing(): void {
 			_binder.target = _target;
 		}
 		public function testSettingSourceThenTargetBindsSourceAvailableToTargetEnabled(): void {
@@ -56,11 +55,11 @@ package org.compaction.binder {
 			condition.currentValue = true;
 			assertEquals("", _target.toolTip);
 		}
-		public function testSettingSourceAndTargetBindsSourceExecuteToTargetClick(): void {
+		public function testSettingSourceAndTargetBindsSourceExecuteToTargetListChange(): void {
 			_source.availableWhenTrue(new Condition(true));
 			_binder.source = _source;
 			_binder.target = _target;
-			_target.dispatchEvent(new MouseEvent(MouseEvent.CLICK));
+			_target.dispatchEvent(new ListEvent(ListEvent.CHANGE));
 			assertEquals(1, _recorder.invocationCount)
 		}
 	}

@@ -16,7 +16,7 @@ package org.compaction.binder {
 	 * 
 	 * @author shanonmcquay
 	 */
-	public class ActionBinder {
+	public class ButtonBinder {
 		private var _source:ISimpleAction;
 		private var _target:Button;
 		public function set source(source:ISimpleAction): void {
@@ -29,15 +29,12 @@ package org.compaction.binder {
 		}
 		private function refresh(): void {
 			if(_source && _target) {
-				bind(_source, _target);
+				BindingUtils.bindProperty(_target, "enabled", _source, "available");
+				BindingUtils.bindProperty(_target, "toolTip", _source, "messagesAsTooltip");
+				_target.addEventListener(MouseEvent.CLICK, function(e:MouseEvent): void {
+					_source.execute();
+				});
 			}
-		}
-		public static function bind(source:ISimpleAction, target:Button): void {
-			BindingUtils.bindProperty(target, "enabled", source, "available");
-			BindingUtils.bindProperty(target, "toolTip", source, "messagesAsTooltip");
-			target.addEventListener(MouseEvent.CLICK, function(e:MouseEvent): void {
-				source.execute();
-			});
 		}
 	}
 }

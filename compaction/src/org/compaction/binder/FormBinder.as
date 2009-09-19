@@ -109,7 +109,7 @@ package org.compaction.binder {
 			val.target = item;
 		}
 		private function examineButton(item:Button): void {
-			var binder:ActionBinder = binderFactory.newActionBinder();
+			var binder:ButtonBinder = binderFactory.newButtonBinder();
 			if("saveButton" == item.id) {
 				binder.source = _source.save;
 				binder.target = item;

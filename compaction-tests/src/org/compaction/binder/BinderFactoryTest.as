@@ -3,7 +3,7 @@ package org.compaction.binder {
 	
 	public class BinderFactoryTest extends TestCase {
 		public function testNewActionBinderCreatesActionBinder(): void {
-			assertEquals(true, new BinderFactory().newActionBinder() is ActionBinder);
+			assertEquals(true, new BinderFactory().newButtonBinder() is ButtonBinder);
 		}
 		public function testNewTextBinderCreatesTextBinder(): void {
 			assertEquals(true, new BinderFactory().newTextBinder() is TextBinder);

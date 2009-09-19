@@ -6,6 +6,7 @@
 	
 	<mx:Script>
 		<![CDATA[
+			import org.compaction.binder.ListBinderTest;
 			import org.compaction.binder.ConditionBinderTest;
 			import org.compaction.utils.ObjectUtilsTest;
 			import org.compaction.utils.StringUtilsTest;
@@ -13,7 +14,7 @@
 			import org.compaction.binder.FormBinderTest;
 			import org.compaction.binder.DateBinderTest;
 			import org.compaction.binder.TextBinderTest;
-			import org.compaction.binder.ActionBinderTest;
+			import org.compaction.binder.ButtonBinderTest;
 			import org.compaction.validation.impl.DateValidationBuilderTest;
 			import org.compaction.validation.ValidationRoutinesTest;
 			import org.compaction.validation.ValidationMessagesTest;
@@ -45,7 +46,7 @@
   				var testSuite:TestSuite = new TestSuite();
   				testSuite.addTestSuite(AbstractActionTest);
   				testSuite.addTestSuite(AbstractValidationBuilderTest);
-  				testSuite.addTestSuite(ActionBinderTest);
+  				testSuite.addTestSuite(ButtonBinderTest);
   				testSuite.addTestSuite(BinderFactoryTest);
   				testSuite.addTestSuite(CollectionUtilsTest);
   				testSuite.addTestSuite(ConditionBinderTest);
@@ -56,6 +57,7 @@
   				testSuite.addTestSuite(EditModelTest);
   				testSuite.addTestSuite(FormBinderTest);
   				testSuite.addTestSuite(ItemActionTest);
+  				testSuite.addTestSuite(ListBinderTest);
   				testSuite.addTestSuite(NotConditionTest);
   				testSuite.addTestSuite(NumberValidationBuilderTest);
   				testSuite.addTestSuite(ObjectUtilsTest);

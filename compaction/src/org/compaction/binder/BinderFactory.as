@@ -6,8 +6,8 @@ package org.compaction.binder {
 	 * @author shanonmcquay
 	 */
 	public class BinderFactory {
-		public function newActionBinder(): ActionBinder {
-			return new ActionBinder();
+		public function newButtonBinder(): ButtonBinder {
+			return new ButtonBinder();
 		}
 		public function newTextBinder(): TextBinder {
 			return new TextBinder();

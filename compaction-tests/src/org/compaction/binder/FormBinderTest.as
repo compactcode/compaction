@@ -15,13 +15,13 @@ package org.compaction.binder {
 		private var _source:IEditModel;
 		private var _target:Form;
 		private var _factory:BinderFactory;
-		private var _actionBinder:ActionBinder;
+		private var _buttonBinder:ButtonBinder;
 		private var _dateBinder:DateBinder;
 		private var _textBinder:TextBinder;
 		private var _validationBinder:ValidationBinder;
 		private var _conditionBinder:ConditionBinder;
 		public function FormBinderTest() {
-			super([ActionBinder, ConditionBinder, DateBinder, TextBinder, ValidationBinder, BinderFactory]);
+			super([ButtonBinder, ConditionBinder, DateBinder, TextBinder, ValidationBinder, BinderFactory]);
 		}
 		override public function setUp():void {
 			_source = new EditModel();
@@ -29,13 +29,13 @@ package org.compaction.binder {
 			_target.initialized = true;
 			
 			_factory = mock(BinderFactory);
-			_actionBinder = mock(ActionBinder);
+			_buttonBinder = mock(ButtonBinder);
 			_conditionBinder = mock(ConditionBinder);
 			_dateBinder = mock(DateBinder);
 			_textBinder = mock(TextBinder);
 			_validationBinder = mock(ValidationBinder);
 			
-			given(_factory.newActionBinder()).willReturn(_actionBinder);
+			given(_factory.newButtonBinder()).willReturn(_buttonBinder);
 			given(_factory.newConditionBinder()).willReturn(_conditionBinder);
 			given(_factory.newDateBinder()).willReturn(_dateBinder);
 			given(_factory.newTextBinder()).willReturn(_textBinder);
@@ -57,8 +57,8 @@ package org.compaction.binder {
 			_binder.source = _source;
 			_binder.target = _target;
 			
-			verify().that(_actionBinder.source = _source.save);
-			verify().that(_actionBinder.target = button);
+			verify().that(_buttonBinder.source = _source.save);
+			verify().that(_buttonBinder.target = button);
 		}
 		public function testFormButtonWithIdMatchingCancelButtonIsBound(): void {
 			var button:Button = button("cancelButton");
@@ -67,8 +67,8 @@ package org.compaction.binder {
 			_binder.target = _target;
 			_binder.source = _source;
 			
-			verify().that(_actionBinder.source = _source.cancel);
-			verify().that(_actionBinder.target = button);
+			verify().that(_buttonBinder.source = _source.cancel);
+			verify().that(_buttonBinder.target = button);
 		}
 		public function testNestedFormTextInputWithIdMatchingModelPropertyIsBound(): void {
 			var nestedInput:TextInput = textField("nameInput");
