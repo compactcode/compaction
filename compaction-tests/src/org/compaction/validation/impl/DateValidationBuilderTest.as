@@ -29,22 +29,28 @@ package org.compaction.validation.impl {
 		
 		public function testBeforeTodayAddsErrorIfRoutineFails(): void {
 			var testDate:Date = new Date();
-			given(_routines.afterToday(testDate)).willReturn(true);
-			given(_messages.wasAfterToday()).willReturn("foorequired");
+			given(_routines.beforeToday(testDate)).willReturn(false);
+			given(_messages.mustBeBeforeToday()).willReturn("foorequired");
 			_builder = new DateValidationBuilder(testDate, _parent, "key");
-			_builder.onOrBeforeToday();
+			_builder.beforeToday();
 			verify().that(_parent.addError("foorequired", "key"));
 		}
 		public function testBeforeTodayDoesNothingIfRoutinePasses(): void {
 			var testDate:Date = new Date();
-			given(_routines.afterToday(testDate)).willReturn(false);
+			given(_routines.beforeToday(testDate)).willReturn(true);
 			_builder = new DateValidationBuilder(testDate, _parent, "key");
-			_builder.onOrBeforeToday();
+			_builder.beforeToday();
+			verify(never()).that(_parent.addError(any(), any()));
+		}
+		public function testBeforeTodayDoesNothingIfValueIsNull() : void {
+			_builder = new DateValidationBuilder(null, _parent, "key");
+			_builder.beforeToday();
+			
 			verify(never()).that(_parent.addError(any(), any()));
 		}
 		public function testBeforeTodayIsFluent(): void {
 			_builder = new DateValidationBuilder(new Date(), _parent, "key");
-			assertEquals(_builder, _builder.onOrBeforeToday());
+			assertEquals(_builder, _builder.beforeToday());
 		}
 		
 		// -- Before
@@ -53,28 +59,34 @@ package org.compaction.validation.impl {
 			var tomorrow:Date = new Date();
 			var today:Date = new Date();
 			
-			given(_routines.after(today, tomorrow)).willReturn(true);
-			given(_messages.wasAfter(today)).willReturn("after");
+			given(_routines.before(today, tomorrow)).willReturn(false);
+			given(_messages.mustBeBefore(today)).willReturn("error");
 			
 			_builder = new DateValidationBuilder(tomorrow, _parent, "key");
-			_builder.onOrBefore(today);
+			_builder.before(today);
 			
-			verify().that(_parent.addError("after", "key"));
+			verify().that(_parent.addError("error", "key"));
 		}
 		public function testBeforeDoesNothingIfRoutinePasses(): void {
 			var tomorrow:Date = new Date();
 			var today:Date = new Date();
 			
-			given(_routines.after(tomorrow, today)).willReturn(false);
+			given(_routines.before(tomorrow, today)).willReturn(true);
 			
 			_builder = new DateValidationBuilder(today, _parent, "key");
-			_builder.onOrBefore(tomorrow);
+			_builder.before(tomorrow);
+			
+			verify(never()).that(_parent.addError(any(), any()));
+		}
+		public function testBeforeDoesNothingIfValueIsNull() : void {
+			_builder = new DateValidationBuilder(null, _parent, "key");
+			_builder.before(new Date());
 			
 			verify(never()).that(_parent.addError(any(), any()));
 		}
 		public function testBeforeIsFluent(): void {
 			_builder = new DateValidationBuilder(new Date(), _parent, "key");
-			assertEquals(_builder, _builder.onOrBefore(null));
+			assertEquals(_builder, _builder.before(null));
 		}
 		
 		// -- Ater
@@ -83,28 +95,34 @@ package org.compaction.validation.impl {
 			var today:Date = new Date();
 			var tommorrow:Date = new Date();
 			
-			given(_routines.before(tommorrow, today)).willReturn(true);
-			given(_messages.wasBefore(tommorrow)).willReturn("before");
+			given(_routines.after(tommorrow, today)).willReturn(false);
+			given(_messages.mustBeAfter(tommorrow)).willReturn("error");
 			
 			_builder = new DateValidationBuilder(today, _parent, "key");
-			_builder.onOrAfter(tommorrow);
+			_builder.after(tommorrow);
 			
-			verify().that(_parent.addError("before", "key"));
+			verify().that(_parent.addError("error", "key"));
 		}
 		public function testAfterDoesNothingIfRoutinePasses(): void {
 			var today:Date = new Date();
 			var tommorrow:Date = new Date();
 			
-			given(_routines.before(today, tommorrow)).willReturn(false);
+			given(_routines.after(today, tommorrow)).willReturn(true);
 			
 			_builder = new DateValidationBuilder(tommorrow, _parent, "key");
-			_builder.onOrAfter(today);
+			_builder.after(today);
+			
+			verify(never()).that(_parent.addError(any(), any()));
+		}
+		public function testAfterDoesNothingIfValueIsNull() : void {
+			_builder = new DateValidationBuilder(null, _parent, "key");
+			_builder.after(new Date());
 			
 			verify(never()).that(_parent.addError(any(), any()));
 		}
 		public function testAfterIsFluent(): void {
 			_builder = new DateValidationBuilder(new Date(), _parent, "key");
-			assertEquals(_builder, _builder.onOrAfter(null));
+			assertEquals(_builder, _builder.after(null));
 		}
 		
 	}

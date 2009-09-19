@@ -158,23 +158,23 @@ package org.compaction.validation {
 			assertEquals(true, _utils.lessThanEqualTo(18, 17));
 		}
 		
-		// -- After Today
+		// -- Before Today
 		
-		public function testAfterTodayFalseWhenValueIsNull(): void {
-			assertEquals(false, _utils.afterToday(null));
+		public function testBeforeTodayFalseWhenValueIsNull(): void {
+			assertEquals(false, _utils.beforeToday(null));
 		}
-		public function testAfterTodayFalseWhenValueIsYesterday(): void {
-			var date:Date = new Date();
-			date.setTime(date.getTime() - _oneDay);
-			assertEquals(false, _utils.afterToday(date));
+		public function testBeforeTodayFalseWhenValueIsToday(): void {
+			assertEquals(false, _utils.beforeToday(new Date()));
 		}
-		public function testAfterTodayFalseWhenValueIsToday(): void {
-			assertEquals(false, _utils.afterToday(new Date()));
-		}
-		public function testAfterTodayTrueWhenValueIsTomorrow(): void {
+		public function testBeforeTodayFalseWhenValueIsTomorrow(): void {
 			var date:Date = new Date();
 			date.setTime(date.getTime() + _oneDay);
-			assertEquals(true, _utils.afterToday(date));
+			assertEquals(false, _utils.beforeToday(date));
+		}
+		public function testBeforeTodayTrueWhenValueIsYesterday(): void {
+			var date:Date = new Date();
+			date.setTime(date.getTime() - _oneDay);
+			assertEquals(true, _utils.beforeToday(date));
 		}
 		
 		// -- After
@@ -191,16 +191,16 @@ package org.compaction.validation {
 		public function testBeforeFalseWhenMaxIsNull(): void {
 			assertEquals(false, _utils.before(null, new Date()));
 		}
-		public function testBeforeFalseWhenValueIsYesterday(): void {
+		public function testBeforeFalseWhenValueOneDayAfterMax(): void {
 			var today:Date = new Date();
 			var yesterday:Date = new Date();
 			yesterday.setTime(yesterday.getTime() - _oneDay);
 			assertEquals(false, _utils.before(yesterday, today));
 		}
-		public function testBeforeFalseWhenValueIsToday(): void {
+		public function testBeforeFalseWhenValueSameAsMax(): void {
 			assertEquals(false, _utils.before(new Date(), new Date()));
 		}
-		public function testBeforeTrueWhenValueIsTomorrow(): void {
+		public function testBeforeTrueWhenWhenValueOneDayBeforeMax(): void {
 			var today:Date = new Date();
 			var tomorrow:Date = new Date();
 			tomorrow.setTime(today.getTime() + _oneDay);

@@ -46,7 +46,7 @@ package org.compaction.validation.impl {
 		
 		public function testMinLengthAddsErrorIfRoutineFails(): void {
 			given(_routines.lessThan(4, 3)).willReturn(true);
-			given(_messages.wasLowerThanCharacterMin(4)).willReturn("lowerthanmin");
+			given(_messages.mustNotPrecedeCharacterMin(4)).willReturn("lowerthanmin");
 			_builder = new StringValidationBuilder("foo", _parent, "key");
 			_builder.minLength(4);
 			verify().that(_parent.addError("lowerthanmin", "key"));
@@ -61,7 +61,7 @@ package org.compaction.validation.impl {
 			_builder = new StringValidationBuilder(null, _parent, "key");
 			_builder.minLength(2);
 			verify(never()).that(_routines.lessThan(any(), any()));
-			verify(never()).that(_messages.wasLowerThanCharacterMin(any()));
+			verify(never()).that(_messages.mustNotPrecedeCharacterMin(any()));
 		}
 		public function testMinLengthIsFluent(): void {
 			_builder = new StringValidationBuilder(null, _parent, null);
@@ -72,7 +72,7 @@ package org.compaction.validation.impl {
 		
 		public function testMaxLengthAddsErrorIfRoutineFails(): void {
 			given(_routines.greaterThan(2, 3)).willReturn(true);
-			given(_messages.wasGreaterThanCharacterMax(2)).willReturn("greaterthanmax");
+			given(_messages.mustNotExceedCharacterMax(2)).willReturn("greaterthanmax");
 			_builder = new StringValidationBuilder("foo", _parent, "key");
 			_builder.maxLength(2);
 			verify().that(_parent.addError("greaterthanmax", "key"));
@@ -87,7 +87,7 @@ package org.compaction.validation.impl {
 			_builder = new StringValidationBuilder(null, _parent, "key");
 			_builder.maxLength(2);
 			verify(never()).that(_routines.greaterThan(any(), any()));
-			verify(never()).that(_messages.wasGreaterThanCharacterMax(any()));
+			verify(never()).that(_messages.mustNotExceedCharacterMax(any()));
 		}
 		public function testMaxLengthIsFluent(): void {
 			_builder = new StringValidationBuilder(null, _parent, null);

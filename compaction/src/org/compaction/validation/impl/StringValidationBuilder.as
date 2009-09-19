@@ -15,13 +15,13 @@ package org.compaction.validation.impl {
 		}
 		public function minLength(min:int): IStringValidationBuilder {
 			if(value && routines.lessThan(min, value.length)) {
-				addError(messages.wasLowerThanCharacterMin(min));
+				addError(messages.mustNotPrecedeCharacterMin(min));
 			}
 			return this;
 		}
 		public function maxLength(max:int): IStringValidationBuilder {
 			if(value && routines.greaterThan(max, value.length)) {
-				addError(messages.wasGreaterThanCharacterMax(max));
+				addError(messages.mustNotExceedCharacterMax(max));
 			}
 			return this;
 		}

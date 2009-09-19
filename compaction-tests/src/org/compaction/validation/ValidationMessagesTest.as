@@ -19,34 +19,34 @@ package org.compaction.validation {
 		public function testRequiredMessage(): void {
 			assertEquals("This field is required.", _messages.wasRequired());
 		}
-		public function testLowerThanMinCharacterMessage(): void {
-			assertEquals("The minimum length allowed is 5.", _messages.wasLowerThanCharacterMin(5));
+		public function testMustNotPrecedeCharacterMinMessage(): void {
+			assertEquals("The minimum length allowed is 5.", _messages.mustNotPrecedeCharacterMin(5));
 		}
-		public function testGreaterThanMaxCharacterMessage(): void {
-			assertEquals("The maximum length allowed is 5.", _messages.wasGreaterThanCharacterMax(5));
+		public function testMustNotExceedCharacterMaxMessage(): void {
+			assertEquals("The maximum length allowed is 5.", _messages.mustNotExceedCharacterMax(5));
 		}
-		public function testLowerThanMinMessage(): void {
-			assertEquals("The minimum value allowed is 5.", _messages.wasLowerThanMin(5));
+		public function testMustNotPrecedeMinMessage(): void {
+			assertEquals("The minimum value allowed is 5.", _messages.mustNotPrecedeMin(5));
 		}
-		public function testGreaterThanMaxMessage(): void {
-			assertEquals("The maximum value allowed is 5.", _messages.wasGreaterThanMax(5));
+		public function testMustNotExceedMaxMessage(): void {
+			assertEquals("The maximum value allowed is 5.", _messages.mustNotExceedMax(5));
 		}
-		public function testWasAfterTodayMessage(): void {
-			assertEquals("The date entered must be on or before today.", _messages.wasAfterToday());
+		public function testMustBeBeforeTodayMessage(): void {
+			assertEquals("The date entered must be before today.", _messages.mustBeBeforeToday());
 		}
-		public function testWasAfterMessage(): void {
+		public function testMustBeAfterMessage(): void {
 			var date:Date = new Date(2000, 1, 27);
 			var format:DateFormatter = new DateFormatter();
-			var messageTemplate:String = "The date entered must be on or before {0}.";
+			var messageTemplate:String = "The date entered must be after {0}.";
 			var expectedMessage:String = StringUtil.substitute(messageTemplate, format.format(date));
-			assertEquals(expectedMessage, _messages.wasAfter(date));
+			assertEquals(expectedMessage, _messages.mustBeAfter(date));
 		}
-		public function testWasBeforeMessage(): void {
+		public function testMustBeBeforeMessage(): void {
 			var date:Date = new Date(2000, 1, 27);
 			var format:DateFormatter = new DateFormatter();
-			var messageTemplate:String = "The date entered must be on or after {0}.";
+			var messageTemplate:String = "The date entered must be before {0}.";
 			var expectedMessage:String = StringUtil.substitute(messageTemplate, format.format(date));
-			assertEquals(expectedMessage, _messages.wasBefore(date));
+			assertEquals(expectedMessage, _messages.mustBeBefore(date));
 		}
 		public function testWasMissingAtSignMessage(): void {
 			assertEquals("An at sign (@) is missing in your e-mail address.", _messages.wasMissingAtSign());

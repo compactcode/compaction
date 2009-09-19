@@ -21,31 +21,31 @@ package org.compaction.validation {
 		public function wasRequired(): String {
 			return _resourceManager.getString("validators", "requiredFieldError");
 		}
-		public function wasLowerThanCharacterMin(min:int): String {
-			var template:String = _resourceManager.getString("compaction", "wasLowerThanCharacterMinError");
+		public function mustNotPrecedeCharacterMin(min:int): String {
+			var template:String = _resourceManager.getString("compaction", "mustNotPrecedeCharacterMinError");
 			return StringUtil.substitute(template, min);
 		}
-		public function wasGreaterThanCharacterMax(max:int): String {
-			var template:String = _resourceManager.getString("compaction", "wasGreaterThanCharacterMaxError");
+		public function mustNotExceedCharacterMax(max:int): String {
+			var template:String = _resourceManager.getString("compaction", "mustNotExceedCharacterMaxError");
 			return StringUtil.substitute(template, max);
 		}
-		public function wasLowerThanMin(min:int): String {
-			var template:String = _resourceManager.getString("compaction", "wasLowerThanMinError");
+		public function mustNotPrecedeMin(min:int): String {
+			var template:String = _resourceManager.getString("compaction", "mustNotPrecedeMinError");
 			return StringUtil.substitute(template, min);
 		}
-		public function wasGreaterThanMax(max:int): String {
-			var template:String = _resourceManager.getString("compaction", "wasGreaterThanMaxError");
+		public function mustNotExceedMax(max:int): String {
+			var template:String = _resourceManager.getString("compaction", "mustNotExceedMaxError");
 			return StringUtil.substitute(template, max);
 		}
-		public function wasAfterToday(): String {
-			return _resourceManager.getString("compaction", "wasAfterTodayError");
+		public function mustBeBeforeToday(): String {
+			return _resourceManager.getString("compaction", "mustBeBeforeTodayError");
 		}
-		public function wasAfter(date:Date): String {
-			var template:String = _resourceManager.getString("compaction", "wasAfterError");
+		public function mustBeAfter(date:Date): String {
+			var template:String = _resourceManager.getString("compaction", "mustBeAfterError");
 			return StringUtil.substitute(template, dateFormatter.format(date));
 		}
-		public function wasBefore(date:Date): String {
-			var template:String = _resourceManager.getString("compaction", "wasBeforeError");
+		public function mustBeBefore(date:Date): String {
+			var template:String = _resourceManager.getString("compaction", "mustBeBeforeError");
 			return StringUtil.substitute(template, dateFormatter.format(date));
 		}
 		public function wasMissingAtSign(): String {

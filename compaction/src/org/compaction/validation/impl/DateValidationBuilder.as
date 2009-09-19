@@ -5,21 +5,21 @@ package org.compaction.validation.impl {
 		public function DateValidationBuilder(value:Date, parent:IValidationBuilder, key:String) {
 			super(value, parent, key);
 		}
-		public function onOrBeforeToday(): IDateValidationBuilder {
-			if(routines.afterToday(value)) {
-				addError(messages.wasAfterToday());
+		public function beforeToday(): IDateValidationBuilder {
+			if(value && !routines.beforeToday(value)) {
+				addError(messages.mustBeBeforeToday());
 			}
 			return this;
 		}
-		public function onOrBefore(max:Date): IDateValidationBuilder {
-			if(routines.after(max, value)) {
-				addError(messages.wasAfter(max));
+		public function before(max:Date): IDateValidationBuilder {
+			if(value && !routines.before(max, value)) {
+				addError(messages.mustBeBefore(max));
 			}
 			return this;
 		}
-		public function onOrAfter(min:Date): IDateValidationBuilder {
-			if(routines.before(min, value)) {
-				addError(messages.wasBefore(min));
+		public function after(min:Date): IDateValidationBuilder {
+			if(value && !routines.after(min, value)) {
+				addError(messages.mustBeAfter(min));
 			}
 			return this;
 		}

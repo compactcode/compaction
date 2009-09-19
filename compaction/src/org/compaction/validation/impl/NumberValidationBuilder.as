@@ -9,21 +9,21 @@ package org.compaction.validation.impl {
 		}
 		public function between(min:Number, max:Number): INumberValidationBuilder {
 			if(routines.lessThan(min, value)) {
-				addError(messages.wasLowerThanMin(min));
+				addError(messages.mustNotPrecedeMin(min));
 			} else if(routines.greaterThan(max, value)) {
-				addError(messages.wasGreaterThanMax(max));
+				addError(messages.mustNotExceedMax(max));
 			}
 			return this;
 		}
 		public function lessThan(max:int): INumberValidationBuilder {
 			if(routines.greaterThanEqualTo(max, value)) {
-				addError(messages.wasGreaterThanMax(max));
+				addError(messages.mustNotExceedMax(max));
 			}
 			return this;
 		}
 		public function greaterThan(min:int): INumberValidationBuilder {
 			if(routines.lessThanEqualTo(min, value)) {
-				addError(messages.wasLowerThanMin(min));
+				addError(messages.mustNotPrecedeMin(min));
 			}
 			return this;
 		}

@@ -32,7 +32,7 @@ package org.compaction.validation.impl {
 			var max:int = 1;
 			given(_routines.greaterThan(max, 1)).willReturn(false);
 			given(_routines.lessThan(min, 1)).willReturn(true);
-			given(_messages.wasLowerThanMin(min)).willReturn("lowerthan");
+			given(_messages.mustNotPrecedeMin(min)).willReturn("lowerthan");
 			_builder = new NumberValidationBuilder(1, _parent, "key");
 			_builder.between(min, max);
 			verify().that(_parent.addError("lowerthan", "key"));
@@ -42,7 +42,7 @@ package org.compaction.validation.impl {
 			var max:int = 1;
 			given(_routines.greaterThan(max, 1)).willReturn(true);
 			given(_routines.lessThan(min, 1)).willReturn(false);
-			given(_messages.wasGreaterThanMax(max)).willReturn("greaterthan");
+			given(_messages.mustNotExceedMax(max)).willReturn("greaterthan");
 			_builder = new NumberValidationBuilder(1, _parent, "key");
 			_builder.between(min, max);
 			verify().that(_parent.addError("greaterthan", "key"));
@@ -65,7 +65,7 @@ package org.compaction.validation.impl {
 		
 		public function testLessThanAddsErrorIfRoutineFails(): void {
 			given(_routines.greaterThanEqualTo(2, 2)).willReturn(true);
-			given(_messages.wasGreaterThanMax(2)).willReturn("greaterthanmax");
+			given(_messages.mustNotExceedMax(2)).willReturn("greaterthanmax");
 			
 			_builder = new NumberValidationBuilder(2, _parent, "key");
 			_builder.lessThan(2);
@@ -89,7 +89,7 @@ package org.compaction.validation.impl {
 		
 		public function testGreaterThanAddsErrorIfRoutineFails(): void {
 			given(_routines.lessThanEqualTo(3, 3)).willReturn(true);
-			given(_messages.wasLowerThanMin(3)).willReturn("lessthanmin");
+			given(_messages.mustNotPrecedeMin(3)).willReturn("lessthanmin");
 			
 			_builder = new NumberValidationBuilder(3, _parent, "key");
 			_builder.greaterThan(3);

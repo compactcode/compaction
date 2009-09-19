@@ -171,19 +171,19 @@ package org.compaction.validation {
 		 * 
 		 * @return True of the date is on or before today.
 		 */
-		public function afterToday(value:Date): Boolean {
-			return after(new Date(), value);
+		public function beforeToday(value:Date): Boolean {
+			return before(new Date(), value);
 		}
 		
 		/**
-		 * Determines if the given date is on or before the min date.
+		 * Determines if the given date is after the min date.
 		 * 
 		 * Returns false if either date is null.
 		 *
-		 * @param min The given date must be on or before this date.
+		 * @param min The given date must be after this date.
 		 * @param value The value to check.
 		 * 
-		 * @return True of the date is on or before the min date.
+		 * @return True of the date is after the min date.
 		 */
 		public function after(min:Date, value:Date): Boolean {
 			if(!min || !value) {
@@ -196,14 +196,14 @@ package org.compaction.validation {
 		}
 		
 		/**
-		 * Determines if the given date is on or after the max date.
+		 * Determines if the given date is before the max date.
 		 * 
 		 * Returns false if either date is null.
 		 *
-		 * @param max The given date must be on or after this date.
+		 * @param max The value must be before date.
 		 * @param value The value to check.
 		 * 
-		 * @return True of the date is on or after the max date.
+		 * @return True of the date is before the max date.
 		 */
 		public function before(max:Date, value:Date): Boolean {
 			if(!max || !value) {
