@@ -5,6 +5,7 @@ package org.compaction.binder {
 	
 	import mx.containers.Form;
 	import mx.controls.Button;
+	import mx.controls.CheckBox;
 	import mx.controls.DateField;
 	import mx.controls.TextInput;
 	import mx.core.Container;
@@ -26,6 +27,8 @@ package org.compaction.binder {
 	 * <li>A TextInput with an id of 'nameInput' is bound to the model validator using the 'name' validation key.</li>
 	 * <li>A DateField with an id of 'birthdayInput' is bound to the model edited object 'birthday' property.</li>
 	 * <li>A DateField with an id of 'birthdayInput' is bound to the model validator using the 'birthday' validation key.</li>
+	 * <li>A CheckBox with an id of 'activeInput' is bound to the model edited object 'active' property.</li>
+	 * <li>A CheckBox with an id of 'activeInput' is bound to the model validator using the 'active' validation key.</li>
 	 * </ul>
 	 * 
 	 * @author shanonmcquay
@@ -73,9 +76,20 @@ package org.compaction.binder {
 			if(item is TextInput) {
 				examineTextInput(TextInput(item));
 			} else if(item is DateField) {
-				examineDateField(DateField(item));
+				examineDateInput(DateField(item));
+			} else if(item is CheckBox) {
+				examineCheckInput(CheckBox(item));
 			} else if(item is Button) {
 				examineButton(Button(item));
+			}
+		}
+		private function examineCheckInput(item:CheckBox): void {
+			if(isInputField(item)) {
+				var binder:BooleanBinder = binderFactory.newBooleanBinder();
+				binder.source = _source;
+				binder.property = "edited." + getInputFieldProperty(item);
+				binder.target = item;
+				bindValidationToInput(item);
 			}
 		}
 		private function examineTextInput(item:TextInput): void {
@@ -87,7 +101,7 @@ package org.compaction.binder {
 				bindValidationToInput(item);
 			}
 		}
-		private function examineDateField(item:DateField): void {
+		private function examineDateInput(item:DateField): void {
 			if(isInputField(item)) {
 				var binder:DateBinder = binderFactory.newDateBinder();
 				binder.source = _source;

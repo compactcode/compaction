@@ -6,6 +6,7 @@
 	
 	<mx:Script>
 		<![CDATA[
+			import org.compaction.binder.BooleanBinderTest;
 			import org.compaction.binder.ListBinderTest;
 			import org.compaction.binder.ConditionBinderTest;
 			import org.compaction.utils.ObjectUtilsTest;
@@ -46,6 +47,7 @@
   				var testSuite:TestSuite = new TestSuite();
   				testSuite.addTestSuite(AbstractActionTest);
   				testSuite.addTestSuite(AbstractValidationBuilderTest);
+  				testSuite.addTestSuite(BooleanBinderTest);
   				testSuite.addTestSuite(ButtonBinderTest);
   				testSuite.addTestSuite(BinderFactoryTest);
   				testSuite.addTestSuite(CollectionUtilsTest);

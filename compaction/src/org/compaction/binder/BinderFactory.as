@@ -15,6 +15,9 @@ package org.compaction.binder {
 		public function newDateBinder(): DateBinder {
 			return new DateBinder();
 		}
+		public function newBooleanBinder(): BooleanBinder {
+			return new BooleanBinder();
+		}
 		public function newValidationBinder(): ValidationBinder {
 			return new ValidationBinder();
 		}

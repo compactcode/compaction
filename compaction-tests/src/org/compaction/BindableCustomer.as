@@ -3,6 +3,7 @@ package org.compaction {
 	public class BindableCustomer {
 		public var name:String;
 		public var birth:Date;
+		public var active:Boolean;
 		public var spouse:BindableCustomer;
 	}
 }
