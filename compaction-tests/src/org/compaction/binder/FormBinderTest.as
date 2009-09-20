@@ -3,6 +3,7 @@ package org.compaction.binder {
 	import mx.containers.HBox;
 	import mx.controls.Button;
 	import mx.controls.CheckBox;
+	import mx.controls.ComboBox;
 	import mx.controls.DateField;
 	import mx.controls.TextInput;
 	import mx.core.UIComponent;
@@ -19,11 +20,12 @@ package org.compaction.binder {
 		private var _buttonBinder:ButtonBinder;
 		private var _dateBinder:DateBinder;
 		private var _booleanBinder:BooleanBinder;
+		private var _comboBinder:ComboBinder;
 		private var _textBinder:TextBinder;
 		private var _validationBinder:ValidationBinder;
 		private var _conditionBinder:ConditionBinder;
 		public function FormBinderTest() {
-			super([ButtonBinder, BooleanBinder, ConditionBinder, DateBinder, TextBinder, ValidationBinder, BinderFactory]);
+			super([ButtonBinder, BooleanBinder, ConditionBinder, ComboBinder, DateBinder, TextBinder, ValidationBinder, BinderFactory]);
 		}
 		override public function setUp():void {
 			_source = new EditModel();
@@ -35,6 +37,7 @@ package org.compaction.binder {
 			_conditionBinder = mock(ConditionBinder);
 			_dateBinder = mock(DateBinder);
 			_booleanBinder = mock(BooleanBinder);
+			_comboBinder = mock(ComboBinder);
 			_textBinder = mock(TextBinder);
 			_validationBinder = mock(ValidationBinder);
 			
@@ -42,6 +45,7 @@ package org.compaction.binder {
 			given(_factory.newConditionBinder()).willReturn(_conditionBinder);
 			given(_factory.newDateBinder()).willReturn(_dateBinder);
 			given(_factory.newBooleanBinder()).willReturn(_booleanBinder);
+			given(_factory.newComboBinder()).willReturn(_comboBinder);
 			given(_factory.newTextBinder()).willReturn(_textBinder);
 			given(_factory.newValidationBinder()).willReturn(_validationBinder);
 			
@@ -153,6 +157,28 @@ package org.compaction.binder {
 			verify().that(_validationBinder.key = "active");
 			verify().that(_validationBinder.target = input);
 		}
+		public function testFormComboBoxWithIdIsBound(): void {
+			var input:ComboBox = comboField("countryInput");
+			_target.addChild(input);
+			
+			_binder.source = _source;
+			_binder.target = _target;
+			
+			verify().that(_comboBinder.source = _source);
+			verify().that(_comboBinder.property = "edited.country");
+			verify().that(_comboBinder.target = input);
+		}
+		public function testFormComboWithIdIsBoundToValidator(): void {
+			var input:ComboBox = comboField("countryInput");
+			_target.addChild(input);
+			
+			_binder.source = _source;
+			_binder.target = _target;
+			
+			verify().that(_validationBinder.source = _source.adapter);
+			verify().that(_validationBinder.key = "country");
+			verify().that(_validationBinder.target = input);
+		}
 		public function testTargetIsBoundToEditingCondition(): void {
 			_binder.source = _source;
 			_binder.target = _target;
@@ -171,6 +197,9 @@ package org.compaction.binder {
 		}
 		private function checkField(id:String): CheckBox {
 			return setId(id, new CheckBox());
+		}
+		private function comboField(id:String): ComboBox {
+			return setId(id, new ComboBox());
 		}
 		private function setId(id:String, component:UIComponent): * {
 			component.id = id;

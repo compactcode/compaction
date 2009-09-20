@@ -1,4 +1,6 @@
 package org.compaction.binder {
+	import mx.controls.ComboBox;
+	
 	
 	/**
 	 * A factory for creating binders, created to simplify unit testing. 
@@ -17,6 +19,9 @@ package org.compaction.binder {
 		}
 		public function newBooleanBinder(): BooleanBinder {
 			return new BooleanBinder();
+		}
+		public function newComboBinder(): ComboBinder {
+			return new ComboBinder();
 		}
 		public function newValidationBinder(): ValidationBinder {
 			return new ValidationBinder();

@@ -11,8 +11,11 @@ package org.compaction.binder {
 		public function testNewDateBinderCreatesDateBinder(): void {
 			assertEquals(true, new BinderFactory().newDateBinder() is DateBinder);
 		}
-		public function testNewBooleanBinderCreatesConditionBinder(): void {
+		public function testNewBooleanBinderCreatesBooleanBinder(): void {
 			assertEquals(true, new BinderFactory().newBooleanBinder() is BooleanBinder);
+		}
+		public function testNewComboBinderCreatesComboBinder(): void {
+			assertEquals(true, new BinderFactory().newComboBinder() is ComboBinder);
 		}
 		public function testNewValidationBinderCreatesValidationBinder(): void {
 			assertEquals(true, new BinderFactory().newValidationBinder() is ValidationBinder);
