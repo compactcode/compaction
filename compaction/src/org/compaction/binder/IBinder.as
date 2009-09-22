@@ -6,7 +6,7 @@ package org.compaction.binder {
 	 */
 	public interface IBinder {
 		/**
-		 * Execute
+		 * Bind the objects together.
 		 */
 		function bindSourceToTarget(): void;
 		/**
