@@ -1,11 +1,6 @@
 package org.compaction.binder {
 	
-	import flash.events.Event;
-	
-	import mx.binding.utils.BindingUtils;
 	import mx.controls.DateField;
-	
-	import org.compaction.utils.ObjectUtils;
 	
 	/**
 	 * Creates a two way binding between an object property and a DateField.
@@ -13,21 +8,14 @@ package org.compaction.binder {
 	 * @author shanonmcquay
 	 */
 	public class DateBinder extends AbstractInputBinder {
-		private var _target:DateField;
 		public function set target(target:DateField): void {
-			_target = target;
-			bindSourceToTarget();
+			setTarget(target);
 		}
-		override public function bindSourceToTarget(): void {
-			if(_source && _property && _target) {
-				bind(_source, _property.split("."), _commitType, _target);
-			}
+		override protected function get targetPropertyName(): String {
+			return "selectedDate";
 		}
-		public static function bind(source:Object, property:Array, commitType:String, target:DateField): void {
-			BindingUtils.bindProperty(target, "selectedDate", source, property);
-			target.addEventListener(commitType, function(e:Event): void {
-				ObjectUtils.setValueToHost(source, property, target.selectedDate);
-			});
+		override protected function get targetPropertyValue(): Object {
+			return DateField(_target).selectedDate;
 		}
 	}
 }

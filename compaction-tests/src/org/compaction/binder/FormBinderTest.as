@@ -186,6 +186,74 @@ package org.compaction.binder {
 			verify().that(_conditionBinder.source = _source.editing);
 			verify().that(_conditionBinder.target = _target);
 		}
+		public function testSaveButtonBinderCanBeUnbound(): void {
+			_target.addChild(button("saveButton"));
+			
+			_binder.source = _source;
+			_binder.target = _target;
+			
+			_binder.unbindSourceFromTarget();
+			
+			verify().that(_buttonBinder.unbindSourceFromTarget());
+		}
+		public function testCancelButtonBinderCanBeUnbound(): void {
+			_target.addChild(button("cancelButton"));
+			
+			_binder.source = _source;
+			_binder.target = _target;
+			
+			_binder.unbindSourceFromTarget();
+			
+			verify().that(_buttonBinder.unbindSourceFromTarget());
+		}
+		public function testValidationBinderCanBeUnbound(): void {
+			_target.addChild(textField("fooInput"));
+			
+			_binder.source = _source;
+			_binder.target = _target;
+			
+			_binder.unbindSourceFromTarget();
+			
+			verify().that(_validationBinder.unbindSourceFromTarget());
+		}
+		public function testDateBinderCanBeUnbound(): void {
+			_target.addChild(dateField("fooInput"));
+			
+			_binder.source = _source;
+			_binder.target = _target;
+			
+			_binder.unbindSourceFromTarget();
+			
+			verify().that(_dateBinder.unbindSourceFromTarget());
+		}
+		public function testTextBinderCanBeUnbound(): void {
+			_target.addChild(textField("fooInput"));
+			
+			_binder.source = _source;
+			_binder.target = _target;
+			
+			_binder.unbindSourceFromTarget();
+			
+			verify().that(_textBinder.unbindSourceFromTarget());
+		}
+		public function testComboBinderCanBeUnbound(): void {
+			_target.addChild(comboField("fooInput"));
+			
+			_binder.source = _source;
+			_binder.target = _target;
+			
+			_binder.unbindSourceFromTarget();
+			
+			verify().that(_comboBinder.unbindSourceFromTarget());
+		}
+		public function testConditionBinderCanBeUnbound(): void {
+			_binder.source = _source;
+			_binder.target = _target;
+			
+			_binder.unbindSourceFromTarget();
+			
+			verify().that(_conditionBinder.unbindSourceFromTarget());
+		}	
 		private function button(id:String):Button {
 			return setId(id, new Button());
 		}

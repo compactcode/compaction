@@ -2,6 +2,8 @@ package org.compaction.binder {
 	import flash.events.Event;
 	
 	import mx.controls.TextInput;
+	import mx.events.PropertyChangeEvent;
+	import mx.utils.ObjectProxy;
 	
 	import org.compaction.model.EditModel;
 	
@@ -9,10 +11,7 @@ package org.compaction.binder {
 		override public function setUp():void {
 			super.setUp();
 			_property = "name";
-			
 			_target = new TextInput();
-			_target.initialize();
-			
 			_binder = new TextBinder();
 		}
 		public function testSourcePropertyBoundToTargetText(): void {

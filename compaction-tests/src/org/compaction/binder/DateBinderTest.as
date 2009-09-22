@@ -9,9 +9,7 @@ package org.compaction.binder {
 		override public function setUp():void {
 			super.setUp();
 			_property = "birth";
-			
 			_target = new DateField();
-			
 			_binder = new DateBinder();
 		}
 		public function testSourcePropertyBoundToTargetSelectedDate(): void {

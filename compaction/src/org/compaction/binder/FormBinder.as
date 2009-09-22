@@ -30,23 +30,28 @@ package org.compaction.binder {
 	 * <li>A DateField with an id of 'birthdayInput' is bound to the model validator using the 'birthday' validation key.</li>
 	 * <li>A CheckBox with an id of 'activeInput' is bound to the model edited object 'active' property.</li>
 	 * <li>A CheckBox with an id of 'activeInput' is bound to the model validator using the 'active' validation key.</li>
+	 * <li>A ComboBox with an id of 'cityInput' is bound to the model edited object 'city' property.</li>
+	 * <li>A ComboBox with an id of 'cityInput' is bound to the model validator using the 'city' validation key.</li>
 	 * </ul>
 	 * 
 	 * @author shanonmcquay
 	 */
-	public class FormBinder {
+	public class FormBinder implements IBinder {
 		public var binderFactory:BinderFactory = new BinderFactory();
 		private var _source:IEditModel;
 		private var _target:Form;
+		private var _watchers:Array = [];
 		public function set source(source:IEditModel): void {
+			unbindSourceFromTarget();
 			_source = source;
 			bindSourceToTarget();
 		}
 		public function set target(target:Form): void {
+			unbindSourceFromTarget();
 			_target = target;
 			bindSourceToTarget();
 		}
-		private function bindSourceToTarget(): void {
+		public function bindSourceToTarget(): void {
 			if(_source && _target) {
 				if(_target.initialized) {
 					bindInitializedSourceToTarget();
@@ -55,12 +60,20 @@ package org.compaction.binder {
 				}
 			}
 		}
+		public function unbindSourceFromTarget(): void {
+			_watchers.forEach(function(item:IBinder, index:int, array:Array): void {
+				item.unbindSourceFromTarget();
+			});
+			_watchers = [];
+		}
 		private function bindInitializedSourceToTarget(e:Event=null): void {
 			_target.removeEventListener(FlexEvent.CREATION_COMPLETE, bindInitializedSourceToTarget);
 			
 			var binder:ConditionBinder = binderFactory.newConditionBinder();
 			binder.source = _source.editing;
 			binder.target = _target;
+			
+			_watchers.push(binder);
 			
 			examineAllChildren(_target);
 		}
@@ -88,38 +101,22 @@ package org.compaction.binder {
 		}
 		private function examineCheckInput(item:CheckBox): void {
 			if(isInputField(item)) {
-				var binder:BooleanBinder = binderFactory.newBooleanBinder();
-				binder.source = _source;
-				binder.property = "edited." + getInputFieldProperty(item);
-				binder.target = item;
-				bindValidationToInput(item);
+				bindInputField(item, binderFactory.newBooleanBinder());
 			}
 		}
 		private function examineTextInput(item:TextInput): void {
 			if(isInputField(item)) {
-				var binder:TextBinder = binderFactory.newTextBinder();
-				binder.source = _source;
-				binder.property = "edited." + getInputFieldProperty(item);
-				binder.target = item;
-				bindValidationToInput(item);
+				bindInputField(item, binderFactory.newTextBinder());
 			}
 		}
 		private function examineDateInput(item:DateField): void {
 			if(isInputField(item)) {
-				var binder:DateBinder = binderFactory.newDateBinder();
-				binder.source = _source;
-				binder.property = "edited." + getInputFieldProperty(item);
-				binder.target = item;
-				bindValidationToInput(item);
+				bindInputField(item, binderFactory.newDateBinder());
 			}
 		}
 		private function examineComboInput(item:ComboBox): void {
 			if(isInputField(item)) {
-				var binder:ComboBinder = binderFactory.newComboBinder();
-				binder.source = _source;
-				binder.property = "edited." + getInputFieldProperty(item);
-				binder.target = item;
-				bindValidationToInput(item);
+				bindInputField(item, binderFactory.newComboBinder());
 			}
 		}
 		private function isInputField(item:UIComponent): Boolean {
@@ -128,22 +125,32 @@ package org.compaction.binder {
 		private function getInputFieldProperty(item:UIComponent): String {
 			return StringUtils.everythingBefore(item.id, "Input");
 		}
-		private function bindValidationToInput(item:UIComponent): void {
-			var val:ValidationBinder = binderFactory.newValidationBinder();
-			val.source = _source.adapter;
-			val.key = getInputFieldProperty(item);
-			val.target = item;
-		}
 		private function examineButton(item:Button): void {
 			var binder:ButtonBinder = binderFactory.newButtonBinder();
 			if("saveButton" == item.id) {
 				binder.source = _source.save;
 				binder.target = item;
+				_watchers.push(binder);
 			}
 			else if("cancelButton" == item.id) {
 				binder.source = _source.cancel;
 				binder.target = item;
+				_watchers.push(binder);
 			}
+		}
+		private function bindInputField(item:*, binder:*): void {
+			binder.source = _source;
+			binder.property = "edited." + getInputFieldProperty(item);
+			binder.target = item;
+			_watchers.push(binder);
+			bindValidationToInput(item);
+		}
+		private function bindValidationToInput(item:UIComponent): void {
+			var binder:ValidationBinder = binderFactory.newValidationBinder();
+			binder.source = _source.adapter;
+			binder.key = getInputFieldProperty(item);
+			binder.target = item;
+			_watchers.push(binder);
 		}
 	}
 }

@@ -9,15 +9,19 @@ package org.compaction.binder {
 	 * 
 	 * @author shanonmcquay
 	 */
-	public class ValidationBinder {
+	public class ValidationBinder implements IBinder {
 		private var _source:IValidatorAdapter;
 		private var _target:IValidatorListener;
 		private var _key:String = null;
 		public function set source(source:IValidatorAdapter): void {
-			bindSourceToTarget(source, _target);
+			unbindSourceFromTarget();
+			_source = source;
+			bindSourceToTarget();
 		}
 		public function set target(target:IValidatorListener): void {
-			bindSourceToTarget(_source, target);
+			unbindSourceFromTarget();
+			_target = target;
+			bindSourceToTarget();
 		}
 		/**
 		 * Restrict validation errors to the given validaiton key. 
@@ -25,17 +29,18 @@ package org.compaction.binder {
 		 * @param key This key should match the key you are using in your IValidator.
 		 */
 		public function set key(key:String): void {
+			unbindSourceFromTarget();
 			_key = key
-			bindSourceToTarget(_source, _target);
+			bindSourceToTarget();
 		}
-		private function bindSourceToTarget(newSource:IValidatorAdapter, newTarget:IValidatorListener):void {
-			if(_source && _target) {
-				_source.removeListener(_target);
-			}
-			_source = newSource;
-			_target = newTarget;
+		public function bindSourceToTarget():void {
 			if(_source && _target) {
 				_source.attachListener(_target, _key);
+			}
+		}
+		public function unbindSourceFromTarget(): void {
+			if(_source && _target) {
+				_source.removeListener(_target);
 			}
 		}
 	}

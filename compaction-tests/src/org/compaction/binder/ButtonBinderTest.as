@@ -6,13 +6,12 @@ package org.compaction.binder {
 	import mx.controls.Button;
 	
 	import org.compaction.InvocationRecorder;
-	import org.compaction.action.ISimpleAction;
 	import org.compaction.action.SimpleAction;
 	import org.compaction.condition.Condition;
 	
 	public class ButtonBinderTest extends TestCase {
 		private var _binder:ButtonBinder;
-		private var _source:ISimpleAction;
+		private var _source:SimpleAction;
 		private var _recorder:InvocationRecorder;
 		private var _target:Button;
 		override public function setUp():void {
@@ -62,6 +61,13 @@ package org.compaction.binder {
 			_binder.target = _target;
 			_target.dispatchEvent(new MouseEvent(MouseEvent.CLICK));
 			assertEquals(1, _recorder.invocationCount)
+		}
+		public function testRemovingSourceRemovesAllEventListeners(): void {
+			_binder.source = _source;
+			_binder.target = _target;
+			_binder.source = null;
+			assertFalse(_source.hasEventListener("actionAvailableChanged"));
+			assertFalse(_source.hasEventListener("actionMessagesAsTooltipChanged"));
 		}
 	}
 }

@@ -62,5 +62,18 @@ package org.compaction.binder {
 			_target.dispatchEvent(new ListEvent(ListEvent.CHANGE));
 			assertEquals(1, _recorder.invocationCount)
 		}
+		public function testRemovingSourceRemovesAllEventListeners(): void {
+			_binder.source = _source;
+			_binder.target = _target;
+			_binder.source = null;
+			assertFalse(_source.hasEventListener("actionAvailableChanged"));
+			assertFalse(_source.hasEventListener("actionMessagesAsTooltipChanged"));
+		}
+		public function testRemovingTargetRemovesAllEventListeners(): void {
+			_binder.source = _source;
+			_binder.target = _target;
+			_binder.target = null;
+			assertFalse(_target.hasEventListener(ListEvent.CHANGE));
+		}
 	}
 }

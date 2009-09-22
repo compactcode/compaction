@@ -9,10 +9,7 @@ package org.compaction.binder {
 		override public function setUp():void {
 			super.setUp();
 			_property = "active";
-			
 			_target = new CheckBox();
-			_target.initialize();
-			
 			_binder = new BooleanBinder();
 		}
 		public function testSourcePropertyBoundToTargetSelected(): void {

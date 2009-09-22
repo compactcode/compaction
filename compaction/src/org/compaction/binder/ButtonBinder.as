@@ -3,6 +3,7 @@ package org.compaction.binder {
 	import flash.events.MouseEvent;
 	
 	import mx.binding.utils.BindingUtils;
+	import mx.binding.utils.ChangeWatcher;
 	import mx.controls.Button;
 	
 	import org.compaction.action.ISimpleAction;
@@ -16,25 +17,43 @@ package org.compaction.binder {
 	 * 
 	 * @author shanonmcquay
 	 */
-	public class ButtonBinder {
+	public class ButtonBinder implements IBinder {
 		private var _source:ISimpleAction;
 		private var _target:Button;
+		
+		private var _enabledWatcher:ChangeWatcher;
+		private var _tooltipWatcher:ChangeWatcher;
+		
 		public function set source(source:ISimpleAction): void {
+			unbindSourceFromTarget();
 			_source = source;
-			refresh();
+			bindSourceToTarget();
 		}
 		public function set target(target:Button): void {
+			unbindSourceFromTarget();
 			_target = target;
-			refresh();
+			bindSourceToTarget();
 		}
-		private function refresh(): void {
+		public function bindSourceToTarget(): void {
 			if(_source && _target) {
-				BindingUtils.bindProperty(_target, "enabled", _source, "available");
-				BindingUtils.bindProperty(_target, "toolTip", _source, "messagesAsTooltip");
-				_target.addEventListener(MouseEvent.CLICK, function(e:MouseEvent): void {
-					_source.execute();
-				});
+				_enabledWatcher = BindingUtils.bindProperty(_target, "enabled", _source, "available");
+				_tooltipWatcher = BindingUtils.bindProperty(_target, "toolTip", _source, "messagesAsTooltip");
+				_target.addEventListener(MouseEvent.CLICK, clickListener);
 			}
+		}
+		public function unbindSourceFromTarget(): void {
+			if(_enabledWatcher) {
+				_enabledWatcher.unwatch();
+			}
+			if(_tooltipWatcher) {
+				_tooltipWatcher.unwatch();
+			}
+			if(_target) {
+				_target.removeEventListener(MouseEvent.CLICK, clickListener);
+			}
+		}
+		private function clickListener(e:MouseEvent): void {
+			_source.execute();
 		}
 	}
 }

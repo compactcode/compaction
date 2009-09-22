@@ -2,6 +2,8 @@ package org.compaction.binder {
 	import flexunit.framework.TestCase;
 	
 	import mx.containers.Form;
+	import mx.events.PropertyChangeEvent;
+	import mx.utils.ObjectProxy;
 	
 	import org.compaction.condition.Condition;
 	
@@ -13,7 +15,6 @@ package org.compaction.binder {
 			_source = new Condition(false, "foo");
 			_target = new Form();
 			_target.initialize();
-			
 			_binder = new ConditionBinder();
 		}
 		public function testSettingSourceAloneDoesNothing(): void {
@@ -42,6 +43,12 @@ package org.compaction.binder {
 			assertEquals("foo", _target.toolTip);
 			_source.currentMessage = "bar";
 			assertEquals("bar", _target.toolTip);
+		}
+		public function testRemovingSourceRemovesAllEventListeners(): void {
+			_binder.source = _source;
+			_binder.target = _target;
+			_binder.source = null;
+			assertFalse(_source.hasEventListener(PropertyChangeEvent.PROPERTY_CHANGE));
 		}
 	}
 }
