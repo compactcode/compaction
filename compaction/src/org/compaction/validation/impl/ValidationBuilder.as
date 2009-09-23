@@ -75,14 +75,14 @@ package org.compaction.validation.impl {
 		}
 		
 		public function isNull(value:Object, key:String=null): IValidationBuilder {
-			if(!routines.isNull(value)) {
-				addError(messages.wasNull());
+			if(routines.isNotNull(value)) {
+				addError(messages.mustBeNull());
 			}
 			return this;
 		}
 		public function isNotNull(value:Object, key:String=null): IValidationBuilder {
-			if(!routines.isNotNull(value)) {
-				addError(messages.wasNotNull());
+			if(routines.isNull(value)) {
+				addError(messages.mustNotBeNull());
 			}
 			return this;
 		}

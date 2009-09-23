@@ -58,13 +58,13 @@ package org.compaction.validation.impl {
 		}
 		
 		public function testIsNullFailureGeneratesErrorMessage(): void {
-			given(_builder.routines.isNull(null)).willReturn(false);
-			given(_builder.messages.wasNull()).willReturn("fail");
+			given(_builder.routines.isNotNull(null)).willReturn(true);
+			given(_builder.messages.mustBeNull()).willReturn("fail");
 			_builder.isNull(null);
 			assertEquals(true, _builder.errors().contains("fail"));
 		}
 		public function testIsNullSuccessDoesNothing(): void {
-			given(_builder.routines.isNull(null)).willReturn(true);
+			given(_builder.routines.isNotNull(null)).willReturn(false);
 			_builder.isNull(null);
 			assertEquals(0, _builder.errors().length);
 		}
@@ -73,13 +73,13 @@ package org.compaction.validation.impl {
 		}
 		
 		public function testIsNotNullFailureGeneratesErrorMessage(): void {
-			given(_builder.routines.isNotNull(null)).willReturn(false);
-			given(_builder.messages.wasNotNull()).willReturn("fail");
+			given(_builder.routines.isNull(null)).willReturn(true);
+			given(_builder.messages.mustNotBeNull()).willReturn("fail");
 			_builder.isNotNull(null);
 			assertEquals(true, _builder.errors().contains("fail"));
 		}
 		public function testIsNotNullSuccessDoesNothing(): void {
-			given(_builder.routines.isNotNull(null)).willReturn(true);
+			given(_builder.routines.isNull(null)).willReturn(false);
 			_builder.isNotNull(null);
 			assertEquals(0, _builder.errors().length);
 		}

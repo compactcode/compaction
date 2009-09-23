@@ -88,14 +88,14 @@ package org.compaction.validation {
 		function resultsAsArrayByKey(key:String):Array;
 		
 		/**
-		 * Check if the given value is null. Add a default error message if it is.
+		 * Check if the given value is null. Add a default error message if it is not.
 		 * @param value The value to check.
 		 * @param key An optional key to associate any error messages with.
 		 */
 		function isNull(value:Object, key:String=null): IValidationBuilder;
 		
 		/**
-		 * Check if the given value is not null. Add a default error message if it is.
+		 * Check if the given value is null. Add a default error message if it is.
 		 * @param value The value to check.
 		 * @param key An optional key to associate any error messages with.
 		 */

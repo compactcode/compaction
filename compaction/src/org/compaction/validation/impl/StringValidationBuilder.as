@@ -9,7 +9,7 @@ package org.compaction.validation.impl {
 		}
 		public function notEmpty(): IStringValidationBuilder {
 			if(routines.empty(value)) {
-				addError(messages.wasRequired());
+				addError(messages.mustNotBeEmpty());
 			}
 			return this;
 		}

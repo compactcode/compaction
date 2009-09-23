@@ -12,13 +12,13 @@ package org.compaction.validation {
 		 
 		private var _resourceManager:IResourceManager = ResourceManager.getInstance();
 		
-		public function wasNull(): String {
-			return wasRequired();
+		public function mustNotBeNull(): String {
+			return mustNotBeEmpty();
 		}
-		public function wasNotNull(): String {
-			return _resourceManager.getString("compaction", "wasNotNullError");
+		public function mustBeNull(): String {
+			return _resourceManager.getString("compaction", "mustBeNullError");
 		}
-		public function wasRequired(): String {
+		public function mustNotBeEmpty(): String {
 			return _resourceManager.getString("validators", "requiredFieldError");
 		}
 		public function mustNotPrecedeCharacterMin(min:int): String {

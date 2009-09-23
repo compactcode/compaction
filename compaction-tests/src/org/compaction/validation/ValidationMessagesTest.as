@@ -10,14 +10,14 @@ package org.compaction.validation {
 		override public function setUp():void {
 			_messages = new ValidationMessages();
 		}
-		public function testNullMessage(): void {
-			assertEquals("This field is required.", _messages.wasNull());
+		public function testMustNotBeNullMessage(): void {
+			assertEquals("This field is required.", _messages.mustNotBeNull());
 		}
-		public function testNotNullMessage(): void {
-			assertEquals("Value must be null.", _messages.wasNotNull());
+		public function testMustBeNullMessage(): void {
+			assertEquals("Value must be null.", _messages.mustBeNull());
 		}
-		public function testRequiredMessage(): void {
-			assertEquals("This field is required.", _messages.wasRequired());
+		public function testMustBePresentMessage(): void {
+			assertEquals("This field is required.", _messages.mustNotBeEmpty());
 		}
 		public function testMustNotPrecedeCharacterMinMessage(): void {
 			assertEquals("The minimum length allowed is 5.", _messages.mustNotPrecedeCharacterMin(5));

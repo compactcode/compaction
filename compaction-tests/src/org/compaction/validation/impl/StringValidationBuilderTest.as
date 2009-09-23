@@ -26,7 +26,7 @@ package org.compaction.validation.impl {
 		
 		public function testNotEmptyAddsErrorIfRoutineFails(): void {
 			given(_routines.empty("foo")).willReturn(true);
-			given(_messages.wasRequired()).willReturn("foorequired");
+			given(_messages.mustNotBeEmpty()).willReturn("foorequired");
 			_builder = new StringValidationBuilder("foo", _parent, "key");
 			_builder.notEmpty();
 			verify().that(_parent.addError("foorequired", "key"));
