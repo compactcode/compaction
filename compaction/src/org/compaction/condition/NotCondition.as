@@ -1,7 +1,6 @@
 package org.compaction.condition {
 	import flash.events.Event;
 	
-	import mx.binding.utils.BindingUtils;
 	import mx.binding.utils.ChangeWatcher;
 	
 	/**
@@ -12,35 +11,19 @@ package org.compaction.condition {
 	 * @author shanonmcquay
 	 */
 	 [Bindable]
-	public class NotCondition implements ICondition {
+	public class NotCondition extends ReadOnlyCondition {
 		private var _delegate:ICondition;
 		public function NotCondition(delegate:ICondition) {
 			_delegate = delegate;
-			ChangeWatcher.watch(_delegate, "currentValue", dispatchCurrentValueChangeEvent);
-			ChangeWatcher.watch(_delegate, "currentMessage", dispatchCurrentMessageChangeEvent);
+			createBindingDependancy(_delegate);
 		}
-		[Bindable(event="notCurrentValueChanged")]
-		public function get currentValue():Boolean {
+		[Bindable(event="readOnlyCurrentValueChanged")]
+		override public function get currentValue():Boolean {
 			return !_delegate.currentValue;
 		}
-		[Bindable(event="notCurrentMessageChanged")]
-		public function get currentMessage(): String {
+		[Bindable(event="readOnlyCurrentMessageChanged")]
+		override public function get currentMessage(): String {
 			return _delegate.currentMessage;
-		}
-		private function dispatchCurrentValueChangeEvent(ignored:Object): void {
-			dispatchEvent(new Event("notCurrentValueChanged"));
-		}
-		private function dispatchCurrentMessageChangeEvent(ignored:Object): void {
-			dispatchEvent(new Event("notCurrentMessageChanged"));
-		}
-		public function set falseMessage(value:String):void {
-			throwReadOnlyError();
-		}
-		public function set trueMessage(value:String):void {
-			throwReadOnlyError();
-		}
-		private function throwReadOnlyError(): void {
-			throw new Error("Not conditions are read only.");
 		}
 	}
 }

@@ -22,13 +22,13 @@
 <classEntry path="org.compaction.validation.IDateValidationBuilder"/>
 <classEntry path="org.compaction.condition.Condition"/>
 <classEntry path="org.compaction.binder.AbstractInputBinder"/>
-<classEntry path="org.compaction.binder.IBinder"/>
 <classEntry path="org.compaction.utils.StringUtils"/>
 <classEntry path="org.compaction.binder.TextBinder"/>
 <classEntry path="org.compaction.model.IEditModel"/>
 <classEntry path="org.compaction.validation.ValidationRoutines"/>
 <classEntry path="org.compaction.validation.impl.ValidatorAdapter"/>
 <classEntry path="org.compaction.validation.INumberValidationBuilder"/>
+<classEntry path="org.compaction.binder.IBinder"/>
 <classEntry path="org.compaction.action.ItemAction"/>
 <classEntry path="org.compaction.validation.impl.StringValidationBuilder"/>
 <classEntry path="org.compaction.binder.ListBinder"/>
@@ -38,8 +38,10 @@
 <classEntry path="org.compaction.validation.impl.ValidationBuilder"/>
 <classEntry path="org.compaction.binder.ButtonBinder"/>
 <classEntry path="org.compaction.validation.IValidationBuilderFactory"/>
+<classEntry path="org.compaction.condition.AndCondition"/>
 <classEntry path="org.compaction.condition.NotCondition"/>
 <classEntry path="org.compaction.action.ISimpleAction"/>
+<classEntry path="org.compaction.condition.ReadOnlyCondition"/>
 <classEntry path="org.compaction.binder.DateBinder"/>
 <classEntry path="org.compaction.utils.CollectionUtils"/>
 <classEntry path="org.compaction.validation.IStringValidationBuilder"/>

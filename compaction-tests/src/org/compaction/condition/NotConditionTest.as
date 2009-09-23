@@ -25,7 +25,7 @@ package org.compaction.condition {
 				condition.falseMessage = "false";
 				fail("not condition should be read only.");
 			} catch(e:Error) {
-				assertEquals("Not conditions are read only.", e.message);
+				assertEquals("This condition is read only.", e.message);
 			} 
 		}
 		public function testSetTrueMessageThrowsException(): void {
@@ -35,11 +35,10 @@ package org.compaction.condition {
 				condition.trueMessage = "true";
 				fail("not condition should be read only.");
 			} catch(e:Error) {
-				assertEquals("Not conditions are read only.", e.message);
+				assertEquals("This condition is read only.", e.message);
 			} 
 		}
 		public function testCurrentValueIsBindable(): void {
-			var wasBound:Boolean;
 			var delegate:Condition = new Condition(false);
 			var condition:ICondition = new NotCondition(delegate);
 			var recorder:InvocationRecorder = new InvocationRecorder();
@@ -48,13 +47,11 @@ package org.compaction.condition {
 			assertEquals(1, recorder.invocationCount);
 		}
 		public function testCurrentMessageIsBindable(): void {
-			var wasBound:Boolean;
-			var delegate:Condition = new Condition(false);
+			var delegate:Condition = new Condition(true);
 			var condition:ICondition = new NotCondition(delegate);
 			var recorder:InvocationRecorder = new InvocationRecorder();
 			ChangeWatcher.watch(condition, "currentMessage", recorder.invocationRecorder);
 			delegate.trueMessage = "foo";
-			delegate.currentValue = true;
 			assertEquals(1, recorder.invocationCount);
 		}
 	}

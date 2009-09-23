@@ -76,7 +76,7 @@ package org.compaction.binder {
 			_target.removeEventListener(FlexEvent.CREATION_COMPLETE, bindInitializedSourceToTarget);
 			
 			var binder:ConditionBinder = binderFactory.newConditionBinder();
-			binder.source = _source.editing;
+			binder.source = _source.editingAndAcceptingInput;
 			binder.target = _target;
 			
 			_watchers.push(binder);

@@ -196,11 +196,11 @@ package org.compaction.binder {
 			verify().that(_dateBinder.commitEvent = FocusEvent.FOCUS_OUT);
 			verify().that(_booleanBinder.commitEvent = FocusEvent.FOCUS_OUT);
 		}
-		public function testTargetIsBoundToEditingCondition(): void {
+		public function testTargetIsBoundToEditingAndAcceptingInputCondition(): void {
 			_binder.source = _source;
 			_binder.target = _target;
 			
-			verify().that(_conditionBinder.source = _source.editing);
+			verify().that(_conditionBinder.source = _source.editingAndAcceptingInput);
 			verify().that(_conditionBinder.target = _target);
 		}
 		public function testSaveButtonBinderCanBeUnbound(): void {

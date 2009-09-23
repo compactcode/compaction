@@ -37,6 +37,24 @@ package org.compaction.model {
 			assertEquals(false, _model.editing.currentValue);
 		}
 		
+		// --- Editing And Accepting Input Condition
+		
+		public function testEditingAndAcceptingIsTrueWhenEditingAndNotSaving(): void {
+			_model.setEditing(true);
+			_model.setSaving(false);
+			assertEquals(true, _model.editingAndAcceptingInput.currentValue);
+		}
+		public function testEditingAndAcceptingIsFalseWhenSaving(): void {
+			_model.setEditing(true);
+			_model.setSaving(true);
+			assertEquals(false, _model.editingAndAcceptingInput.currentValue);
+		}
+		public function testEditingAndAcceptingIsFalseWhenNotEditing(): void {
+			_model.setEditing(false);
+			_model.setSaving(false);
+			assertEquals(false, _model.editingAndAcceptingInput.currentValue);
+		}
+		
 		// --- Changed Condition
 		
 		public function testChangedIsFalseByDefault(): void {

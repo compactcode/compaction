@@ -10,8 +10,10 @@ package org.compaction.model {
 	import org.compaction.action.ISimpleAction;
 	import org.compaction.action.ItemAction;
 	import org.compaction.action.SimpleAction;
+	import org.compaction.condition.AndCondition;
 	import org.compaction.condition.Condition;
 	import org.compaction.condition.ICondition;
+	import org.compaction.condition.NotCondition;
 	import org.compaction.detector.CloningChangeDetector;
 	import org.compaction.detector.IChangeDetector;
 	import org.compaction.validation.IValidator;
@@ -27,6 +29,10 @@ package org.compaction.model {
 		private const _changed:Condition = new Condition(false);
 		private const _valid:Condition = new Condition(true);
 		private const _saving:Condition = new Condition(false);
+		private const _editingAndAcceptingInput:ICondition = new AndCondition(
+			_editing, 
+			new NotCondition(_saving)
+		);
 		
 		private var _edited:Object;
 		
@@ -98,6 +104,10 @@ package org.compaction.model {
 		
 		public function get editing():ICondition {
 			return _editing;
+		}
+		
+		public function get editingAndAcceptingInput(): ICondition {
+			return _editingAndAcceptingInput;
 		}
 		
 		public function get changed():ICondition {

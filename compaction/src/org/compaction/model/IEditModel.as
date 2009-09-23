@@ -50,25 +50,46 @@ package org.compaction.model {
 		
 		/**
 		 * The condition that represents whether the model is currently editing an object.
+		 * 
+		 * You may override the true and false messages for this condition.
+		 * 
 		 * @return The editing condition.
 		 */
 		function get editing():ICondition;
 		
 		/**
+		 * The condition that represents whether the model is both editing an abject and accepting user input.
+		 * 
+		 * This condition is read only.
+		 * 
+		 * @return The editingAndAcceptingUserInput condition.
+		 */
+		function get editingAndAcceptingInput(): ICondition;
+		
+		/**
 		 * The condition that represents whether the user has made changes to the edited object.
+		 * 
+		 * You may override the true and false messages for this condition.
+		 * 
 		 * @return The changed condition.
 		 */
 		function get changed():ICondition;
 		
 		/**
-		 * The condition that represents whether the edited object has passed all validaitons..
+		 * The condition that represents whether the edited object has passed all validaitons.
+		 * 
+		 * You may override the true and false messages for this condition.
+		 * 
 		 * @return The valid condition.
 		 */
 		function get valid():ICondition;
 		
 		/**
-		 * The condition that represents whether the edited object has passed all validaitons..
-		 * @return The valid condition.
+		 * The condition that represents whether the edited object is currently being saved.
+		 * 
+		 * You may override the true and false messages for this condition.
+		 * 
+		 * @return The saving condition.
 		 */
 		function get saving():ICondition;
 		
