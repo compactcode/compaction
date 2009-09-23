@@ -39,11 +39,17 @@ package org.compaction.binder {
 	public class FormBinder implements IBinder {
 		public var binderFactory:BinderFactory = new BinderFactory();
 		private var _source:IEditModel;
+		private var _commitEvent:String;
 		private var _target:Form;
 		private var _watchers:Array = [];
 		public function set source(source:IEditModel): void {
 			release();
 			_source = source;
+			bind();
+		}
+		public function set commitEvent(commitEvent:String): void {
+			release();
+			_commitEvent = commitEvent;
 			bind();
 		}
 		public function set target(target:Form): void {
@@ -141,6 +147,9 @@ package org.compaction.binder {
 		private function bindInputField(item:*, binder:*): void {
 			binder.source = _source;
 			binder.property = "edited." + getInputFieldProperty(item);
+			if(_commitEvent) {
+				binder.commitEvent = _commitEvent;
+			}
 			binder.target = item;
 			_watchers.push(binder);
 			bindValidationToInput(item);

@@ -1,4 +1,6 @@
 package org.compaction.binder {
+	import flash.events.FocusEvent;
+	
 	import mx.containers.Form;
 	import mx.containers.HBox;
 	import mx.controls.Button;
@@ -178,6 +180,21 @@ package org.compaction.binder {
 			verify().that(_validationBinder.source = _source.adapter);
 			verify().that(_validationBinder.key = "country");
 			verify().that(_validationBinder.target = input);
+		}
+		public function testCommitEventDefaultCanBeOverriden(): void {
+			_target.addChild(comboField("fooInput"));
+			_target.addChild(textField("fooInput"));
+			_target.addChild(dateField("fooInput"));
+			_target.addChild(checkField("fooInput"));
+			
+			_binder.source = _source;
+			_binder.commitEvent = FocusEvent.FOCUS_OUT;
+			_binder.target = _target;
+			
+			verify().that(_comboBinder.commitEvent = FocusEvent.FOCUS_OUT);
+			verify().that(_textBinder.commitEvent = FocusEvent.FOCUS_OUT);
+			verify().that(_dateBinder.commitEvent = FocusEvent.FOCUS_OUT);
+			verify().that(_booleanBinder.commitEvent = FocusEvent.FOCUS_OUT);
 		}
 		public function testTargetIsBoundToEditingCondition(): void {
 			_binder.source = _source;
