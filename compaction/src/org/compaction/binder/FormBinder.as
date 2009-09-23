@@ -42,16 +42,16 @@ package org.compaction.binder {
 		private var _target:Form;
 		private var _watchers:Array = [];
 		public function set source(source:IEditModel): void {
-			unbindSourceFromTarget();
+			release();
 			_source = source;
-			bindSourceToTarget();
+			bind();
 		}
 		public function set target(target:Form): void {
-			unbindSourceFromTarget();
+			release();
 			_target = target;
-			bindSourceToTarget();
+			bind();
 		}
-		public function bindSourceToTarget(): void {
+		public function bind(): void {
 			if(_source && _target) {
 				if(_target.initialized) {
 					bindInitializedSourceToTarget();
@@ -60,9 +60,9 @@ package org.compaction.binder {
 				}
 			}
 		}
-		public function unbindSourceFromTarget(): void {
+		public function release(): void {
 			_watchers.forEach(function(item:IBinder, index:int, array:Array): void {
-				item.unbindSourceFromTarget();
+				item.release();
 			});
 			_watchers = [];
 		}

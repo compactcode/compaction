@@ -8,10 +8,10 @@ package org.compaction.binder {
 		/**
 		 * Bind the objects together.
 		 */
-		function bindSourceToTarget(): void;
+		function bind(): void;
 		/**
-		 * Release all resources held by the binder. 
+		 * Remove all bindings/listeners created by the binder. 
 		 */
-		function unbindSourceFromTarget(): void;
+		function release(): void;
 	}
 }

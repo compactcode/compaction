@@ -13,22 +13,22 @@ package org.compaction.binder {
 		private var _tooltipWatcher:ChangeWatcher;
 		
 		public function set source(source:ICondition): void {
-			unbindSourceFromTarget();
+			release();
 			_source = source;
-			bindSourceToTarget();
+			bind();
 		}
 		public function set target(target:UIComponent): void {
-			unbindSourceFromTarget();
+			release();
 			_target = target;
-			bindSourceToTarget();
+			bind();
 		}
-		public function bindSourceToTarget(): void {
+		public function bind(): void {
 			if(_source && _target) {
 				_enabledWatcher = BindingUtils.bindProperty(_target, "enabled", _source, "currentValue");
 				_tooltipWatcher = BindingUtils.bindProperty(_target, "toolTip", _source, "currentMessage");
 			}
 		}
-		public function unbindSourceFromTarget(): void {
+		public function release(): void {
 			if(_enabledWatcher) {
 				_enabledWatcher.unwatch();
 			}

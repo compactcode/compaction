@@ -23,32 +23,32 @@ package org.compaction.binder {
 		protected var _watcher:ChangeWatcher;
 		
 		public function set source(source:Object): void {
-			unbindSourceFromTarget();
+			release();
 			_source = source;
-			bindSourceToTarget();
+			bind();
 		}
 		public function set property(property:String): void {
-			unbindSourceFromTarget();
+			release();
 			_property = property;
-			bindSourceToTarget();
+			bind();
 		}
 		public function set commitEvent(commitEvent:String): void {
-			unbindSourceFromTarget();
+			release();
 			_commitEvent = commitEvent;
-			bindSourceToTarget();
+			bind();
 		}
 		protected function setTarget(target:UIComponent): void {
-			unbindSourceFromTarget();
+			release();
 			_target = target;
-			bindSourceToTarget();
+			bind();
 		}
-		public function bindSourceToTarget(): void {
+		public function bind(): void {
 			if(_source && _property && _target) {
 				_watcher = BindingUtils.bindProperty(_target, targetPropertyName, _source, _property.split("."));
 				_target.addEventListener(_commitEvent, commitListener);
 			}
 		}
-		public function unbindSourceFromTarget(): void {
+		public function release(): void {
 			if(_watcher) {
 				_watcher.unwatch();
 			}

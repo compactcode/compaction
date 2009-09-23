@@ -14,14 +14,14 @@ package org.compaction.binder {
 		private var _target:IValidatorListener;
 		private var _key:String = null;
 		public function set source(source:IValidatorAdapter): void {
-			unbindSourceFromTarget();
+			release();
 			_source = source;
-			bindSourceToTarget();
+			bind();
 		}
 		public function set target(target:IValidatorListener): void {
-			unbindSourceFromTarget();
+			release();
 			_target = target;
-			bindSourceToTarget();
+			bind();
 		}
 		/**
 		 * Restrict validation errors to the given validaiton key. 
@@ -29,16 +29,16 @@ package org.compaction.binder {
 		 * @param key This key should match the key you are using in your IValidator.
 		 */
 		public function set key(key:String): void {
-			unbindSourceFromTarget();
+			release();
 			_key = key
-			bindSourceToTarget();
+			bind();
 		}
-		public function bindSourceToTarget():void {
+		public function bind():void {
 			if(_source && _target) {
 				_source.attachListener(_target, _key);
 			}
 		}
-		public function unbindSourceFromTarget(): void {
+		public function release(): void {
 			if(_source && _target) {
 				_source.removeListener(_target);
 			}

@@ -192,9 +192,9 @@ package org.compaction.binder {
 			_binder.source = _source;
 			_binder.target = _target;
 			
-			_binder.unbindSourceFromTarget();
+			_binder.release();
 			
-			verify().that(_buttonBinder.unbindSourceFromTarget());
+			verify().that(_buttonBinder.release());
 		}
 		public function testCancelButtonBinderCanBeUnbound(): void {
 			_target.addChild(button("cancelButton"));
@@ -202,9 +202,9 @@ package org.compaction.binder {
 			_binder.source = _source;
 			_binder.target = _target;
 			
-			_binder.unbindSourceFromTarget();
+			_binder.release();
 			
-			verify().that(_buttonBinder.unbindSourceFromTarget());
+			verify().that(_buttonBinder.release());
 		}
 		public function testValidationBinderCanBeUnbound(): void {
 			_target.addChild(textField("fooInput"));
@@ -212,9 +212,9 @@ package org.compaction.binder {
 			_binder.source = _source;
 			_binder.target = _target;
 			
-			_binder.unbindSourceFromTarget();
+			_binder.release();
 			
-			verify().that(_validationBinder.unbindSourceFromTarget());
+			verify().that(_validationBinder.release());
 		}
 		public function testDateBinderCanBeUnbound(): void {
 			_target.addChild(dateField("fooInput"));
@@ -222,9 +222,9 @@ package org.compaction.binder {
 			_binder.source = _source;
 			_binder.target = _target;
 			
-			_binder.unbindSourceFromTarget();
+			_binder.release();
 			
-			verify().that(_dateBinder.unbindSourceFromTarget());
+			verify().that(_dateBinder.release());
 		}
 		public function testTextBinderCanBeUnbound(): void {
 			_target.addChild(textField("fooInput"));
@@ -232,9 +232,9 @@ package org.compaction.binder {
 			_binder.source = _source;
 			_binder.target = _target;
 			
-			_binder.unbindSourceFromTarget();
+			_binder.release();
 			
-			verify().that(_textBinder.unbindSourceFromTarget());
+			verify().that(_textBinder.release());
 		}
 		public function testComboBinderCanBeUnbound(): void {
 			_target.addChild(comboField("fooInput"));
@@ -242,17 +242,17 @@ package org.compaction.binder {
 			_binder.source = _source;
 			_binder.target = _target;
 			
-			_binder.unbindSourceFromTarget();
+			_binder.release();
 			
-			verify().that(_comboBinder.unbindSourceFromTarget());
+			verify().that(_comboBinder.release());
 		}
 		public function testConditionBinderCanBeUnbound(): void {
 			_binder.source = _source;
 			_binder.target = _target;
 			
-			_binder.unbindSourceFromTarget();
+			_binder.release();
 			
-			verify().that(_conditionBinder.unbindSourceFromTarget());
+			verify().that(_conditionBinder.release());
 		}	
 		private function button(id:String):Button {
 			return setId(id, new Button());
