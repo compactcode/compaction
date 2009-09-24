@@ -41,7 +41,7 @@ package org.compaction.model {
 		private var _cancel:SimpleAction;
 		
 		private var _changeDetector:IChangeDetector = new CloningChangeDetector();
-		private var _saveStrategy:ISaveStrategy;
+		private var _saveOperation:IItemOperation;
 		private var _validatorAdapter:ValidatorAdapter = new ValidatorAdapter();
 		
 		public function EditModel() {
@@ -66,7 +66,7 @@ package org.compaction.model {
 			
 			_save = new SimpleAction(function():void {
 				setSaving(true);
-				_saveStrategy.save(
+				_saveOperation.execute(
 					_edited, 
 					function(): void {setSaving(false); setEdited(edited);}, 
 					function(): void {setSaving(false);}
@@ -78,8 +78,8 @@ package org.compaction.model {
 			_save.availableWhenTrue(valid);
 		}
 		
-		public function set saveStrategy(strategy:ISaveStrategy): void {
-			_saveStrategy = strategy;
+		public function set saveOperation(operation:IItemOperation): void {
+			_saveOperation = operation;
 		}
 		
 		public function set validator(validator:IValidator): void {

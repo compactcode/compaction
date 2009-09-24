@@ -35,6 +35,20 @@ package org.compaction.utils {
 			assertEquals(true, result.contains("shanon"));
 			assertEquals(true, result.contains("jack"));
 		}
+		public function testFindReturnsFirstMatch(): void{
+			var source:ArrayCollection = new ArrayCollection(["shanon", "tim", "jack"]);
+			var result:Object = CollectionUtils.find(source, function(item:String): Boolean {
+				return item.search("a") != -1
+			});
+			assertEquals("shanon", result);
+		}
+		public function testFindReturnsNullIfNoMatch(): void{
+			var source:ArrayCollection = new ArrayCollection(["shanon", "tim", "jack"]);
+			var result:Object = CollectionUtils.find(source, function(item:String): Boolean {
+				return item.search("z") != -1
+			});
+			assertEquals(null, result);
+		}
 		public function testContainsVerifiesGivenCollectionContainsTheGivenNumberOfMatches(): void {
 			var source:ArrayCollection = new ArrayCollection(["shanon", "tim", "jack"]);
 			var result:Boolean = CollectionUtils.contains(1, source, function(item:String): Boolean {

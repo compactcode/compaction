@@ -1,5 +1,6 @@
 package org.compaction.utils {
 	import mx.collections.ArrayCollection;
+	import mx.collections.ICollectionView;
 	import mx.collections.ListCollectionView;
 	
 	/**
@@ -40,13 +41,28 @@ package org.compaction.utils {
 			return mapped;
 		}
 		/**
+		 * Returns the first occuring element that returned true when applied to the matcher. Or false
+		 * if no elements matched.
+		 * 
+		 * @param source The source collection.
+		 * @param matcher function(item:*): Boolean
+		 * @return The first occuring element that returned true when applied to the matcher, or null.
+		 */
+		public static function find(source:ICollectionView, matcher:Function): Object {
+			var filtered:ArrayCollection = filter(source, matcher);
+			if(filtered.length > 0) {
+				return filtered.getItemAt(0);
+			}
+			return null;
+		}
+		/**
 		 * Creates a new collection by applying the given matcher to each element in the source collection
 		 * 
 		 * @param source The source collection.
 		 * @param matcher function(item:*): Boolean
 		 * @return A new collection for elements that returned true when applied to the matcher.
 		 */
-		public static function filter(source:ListCollectionView, matcher:Function): ArrayCollection {
+		public static function filter(source:ICollectionView, matcher:Function): ArrayCollection {
 			var filtered:ArrayCollection = new ArrayCollection();
 			for each(var item:Object in source) {
 				if(matcher(item)) {
