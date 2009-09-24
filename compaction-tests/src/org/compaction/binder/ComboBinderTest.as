@@ -3,22 +3,18 @@ package org.compaction.binder {
 	
 	import mx.collections.ArrayCollection;
 	import mx.controls.ComboBox;
+	import mx.utils.ObjectProxy;
 	
 	import org.compaction.model.EditModel;
 	
 	public class ComboBinderTest extends InputBinderTestCase {
-		private var names:ArrayCollection = new ArrayCollection();
 		override public function setUp():void {
 			super.setUp();
 			_property = "name";
 			
 			_target = new ComboBox();
-			_target.dataProvider = names;
+			_target.dataProvider = new ArrayCollection(["Shanon","Mike", "Claire"]);
 			_target.initialize();
-			
-			names.addItem("Shanon");
-			names.addItem("Mike");
-			names.addItem("Claire");
 			
 			_binder = new ComboBinder();
 		}
@@ -30,6 +26,18 @@ package org.compaction.binder {
 			assertEquals("Shanon", _target.selectedItem);
 			_source.name = "Claire";
 			assertEquals("Claire", _target.selectedItem);
+		}
+		public function testSourcePropertyBoundToTargetSelectionUsingId(): void {
+			var claire:Object = {id:2, name:"Claire"};
+			var shanon:Object = {id:3, name:"Shanon"};
+			var customSource:Object = new ObjectProxy({name:{id:3}});
+			_target.dataProvider = new ArrayCollection([claire, shanon]);
+			_binder.source = customSource;
+			_binder.property = "name";
+			_binder.target = _target;
+			assertEquals("Shanon", _target.selectedItem.name);
+			customSource.name = {id:2};
+			assertEquals("Claire", _target.selectedItem.name);
 		}
 		public function testTargetChangeUpdatesSourceProperty(): void {
 			_binder.source = _source;

@@ -44,7 +44,7 @@ package org.compaction.binder {
 		}
 		public function bind(): void {
 			if(_source && _property && _target) {
-				_watcher = BindingUtils.bindProperty(_target, targetPropertyName, _source, _property.split("."));
+				_watcher = BindingUtils.bindSetter(changeListener, _source, _property.split("."));
 				_target.addEventListener(_commitEvent, commitListener);
 			}
 		}
@@ -55,6 +55,9 @@ package org.compaction.binder {
 			if(_target && _commitEvent) {
 				_target.removeEventListener(_commitEvent, commitListener);
 			}
+		}
+		protected function changeListener(newValue:Object): void {
+			_target[targetPropertyName] = newValue; 
 		}
 		protected function commitListener(e:Event): void {
 			ObjectUtils.setValueToHost(_source, _property.split("."), _target[targetPropertyName]);
