@@ -14,8 +14,5 @@ package org.compaction.binder {
 		override protected function get targetPropertyName(): String {
 			return "selectedDate";
 		}
-		override protected function get targetPropertyValue(): Object {
-			return DateField(_target).selectedDate;
-		}
 	}
 }

@@ -14,8 +14,5 @@ package org.compaction.binder {
 		override protected function get targetPropertyName(): String {
 			return "text";
 		}
-		override protected function get targetPropertyValue(): Object {
-			return TextInput(_target).text;
-		}
 	}
 }

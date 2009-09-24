@@ -57,14 +57,10 @@ package org.compaction.binder {
 			}
 		}
 		protected function commitListener(e:Event): void {
-			ObjectUtils.setValueToHost(_source, _property.split("."), targetPropertyValue);
+			ObjectUtils.setValueToHost(_source, _property.split("."), _target[targetPropertyName]);
 		}
 		protected function get targetPropertyName(): String {
 			throw Error("Oops.");
 		}
-		protected function get targetPropertyValue(): Object {
-			throw Error("Oops.");
-		}
-		
 	}
 }

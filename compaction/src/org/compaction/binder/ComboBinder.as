@@ -8,8 +8,5 @@ package org.compaction.binder {
 		override protected function get targetPropertyName(): String {
 			return "selectedItem";
 		}
-		override protected function get targetPropertyValue(): Object {
-			return ComboBox(_target).selectedItem;
-		}
 	}
 }
