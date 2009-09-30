@@ -1,6 +1,6 @@
 # What is compaction?
 
-Compaction is a Flex library that aims to provide reusable solutions to common problems that Flex developers face. 
+Compaction is an unobtrusive Flex library designed to make creating forms easier.
 
 # How do I use it?
 

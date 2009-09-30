@@ -13,7 +13,7 @@ package org.compaction.binder {
 	 * 
 	 * The button enabled property will be bound to the action availability.
 	 * The button tooltip property will be bound to the action messagesAsTooltip.
-	 * The button click event will trigger the action's execute funciton.
+	 * The button click event will trigger the action's execute function.
 	 * 
 	 * @author shanonmcquay
 	 */

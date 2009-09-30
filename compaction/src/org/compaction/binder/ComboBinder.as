@@ -3,7 +3,19 @@ package org.compaction.binder {
 	import mx.controls.ComboBox;
 	
 	import org.compaction.utils.CollectionUtils;
-	
+
+	/**
+	 * Creates a two way binding between an object property and a ComboBox.
+	 * 
+	 * Selects the combo using the first matching evaluation:
+	 * 
+	 * <ol>
+	 * <li>dataProvider.item == object.property</li>
+	 * <li>dataProvider.item.id == object.property.id</li>
+	 * </ol>
+	 * 
+	 * @author shanonmcquay
+	 */	
 	public class ComboBinder extends AbstractInputBinder {
 		private var _compareProperty:String = "id";
 		public function set target(target:ComboBox): void {

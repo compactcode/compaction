@@ -6,6 +6,15 @@ package org.compaction.binder {
 	
 	import org.compaction.action.IItemAction;
 	
+	/**
+	 * Binds an IItemAction to a flex List.
+	 * 
+	 * The list enabled property will be bound to the action availability.
+	 * The list tooltip property will be bound to the action messagesAsTooltip.
+	 * The list change event will trigger the action's execute function with the list's selectedItem.
+	 * 
+	 * @author shanonmcquay
+	 */
 	public class ListBinder implements IBinder {
 		private var _source:IItemAction;
 		private var _target:ListBase;

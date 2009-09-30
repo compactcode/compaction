@@ -5,6 +5,14 @@ package org.compaction.binder {
 	
 	import org.compaction.condition.ICondition;
 	
+	/**
+	 * Binds an ICondition to a flex component.
+	 * 
+	 * The component enabled property will be bound to the condition currentValue.
+	 * The component tooltip property will be bound to the condition currentMessage.
+	 * 
+	 * @author shanonmcquay
+	 */
 	public class ConditionBinder implements IBinder {
 		private var _source:ICondition;
 		private var _target:UIComponent;

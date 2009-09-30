@@ -13,7 +13,7 @@ package org.compaction.binder {
 	 * 
 	 * @author shanonmcquay
 	 */
-	public class AbstractInputBinder implements IBinder{
+	public class AbstractInputBinder implements IBinder {
 		
 		protected var _source:Object;
 		protected var _property:String;
