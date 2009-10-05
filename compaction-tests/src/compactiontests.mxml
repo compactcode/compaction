@@ -6,6 +6,7 @@
 	
 	<mx:Script>
 		<![CDATA[
+			import org.compaction.binder.TextAreaBinderTest;
 			import org.compaction.condition.AndConditionTest;
 			import org.compaction.binder.ComboBinderTest;
 			import org.compaction.binder.BooleanBinderTest;
@@ -67,6 +68,7 @@
   				testSuite.addTestSuite(NotConditionTest);
   				testSuite.addTestSuite(NumberValidationBuilderTest);
   				testSuite.addTestSuite(ObjectUtilsTest);
+  				testSuite.addTestSuite(TextAreaBinderTest);
   				testSuite.addTestSuite(TextBinderTest);
   				testSuite.addTestSuite(SimpleActionTest);
   				testSuite.addTestSuite(StringUtilsTest);

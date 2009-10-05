@@ -14,6 +14,9 @@ package org.compaction.binder {
 		public function newTextBinder(): TextBinder {
 			return new TextBinder();
 		}
+		public function newTextAreaBinder(): TextAreaBinder {
+			return new TextAreaBinder();
+		}
 		public function newDateBinder(): DateBinder {
 			return new DateBinder();
 		}

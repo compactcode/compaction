@@ -8,6 +8,7 @@ package org.compaction.binder {
 	import mx.controls.CheckBox;
 	import mx.controls.ComboBox;
 	import mx.controls.DateField;
+	import mx.controls.TextArea;
 	import mx.controls.TextInput;
 	import mx.core.Container;
 	import mx.core.UIComponent;
@@ -95,6 +96,8 @@ package org.compaction.binder {
 		private function examineChild(item:DisplayObject): void {
 			if(item is TextInput) {
 				examineTextInput(TextInput(item));
+			} else if(item is TextArea) {
+				examineAreaInput(TextArea(item));
 			} else if(item is DateField) {
 				examineDateInput(DateField(item));
 			} else if(item is CheckBox) {
@@ -113,6 +116,11 @@ package org.compaction.binder {
 		private function examineTextInput(item:TextInput): void {
 			if(isInputField(item)) {
 				bindInputField(item, binderFactory.newTextBinder());
+			}
+		}
+		private function examineAreaInput(item:TextArea): void {
+			if(isInputField(item)) {
+				bindInputField(item, binderFactory.newTextAreaBinder());
 			}
 		}
 		private function examineDateInput(item:DateField): void {

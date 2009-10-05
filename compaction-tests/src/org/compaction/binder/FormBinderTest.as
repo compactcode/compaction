@@ -7,6 +7,7 @@ package org.compaction.binder {
 	import mx.controls.CheckBox;
 	import mx.controls.ComboBox;
 	import mx.controls.DateField;
+	import mx.controls.TextArea;
 	import mx.controls.TextInput;
 	import mx.core.UIComponent;
 	
@@ -24,10 +25,11 @@ package org.compaction.binder {
 		private var _booleanBinder:BooleanBinder;
 		private var _comboBinder:ComboBinder;
 		private var _textBinder:TextBinder;
+		private var _textAreaBinder:TextAreaBinder;
 		private var _validationBinder:ValidationBinder;
 		private var _conditionBinder:ConditionBinder;
 		public function FormBinderTest() {
-			super([ButtonBinder, BooleanBinder, ConditionBinder, ComboBinder, DateBinder, TextBinder, ValidationBinder, BinderFactory]);
+			super([ButtonBinder, BooleanBinder, ConditionBinder, ComboBinder, DateBinder, TextBinder, TextAreaBinder, ValidationBinder, BinderFactory]);
 		}
 		override public function setUp():void {
 			_source = new EditModel();
@@ -41,6 +43,7 @@ package org.compaction.binder {
 			_booleanBinder = mock(BooleanBinder);
 			_comboBinder = mock(ComboBinder);
 			_textBinder = mock(TextBinder);
+			_textAreaBinder = mock(TextAreaBinder);
 			_validationBinder = mock(ValidationBinder);
 			
 			given(_factory.newButtonBinder()).willReturn(_buttonBinder);
@@ -49,6 +52,7 @@ package org.compaction.binder {
 			given(_factory.newBooleanBinder()).willReturn(_booleanBinder);
 			given(_factory.newComboBinder()).willReturn(_comboBinder);
 			given(_factory.newTextBinder()).willReturn(_textBinder);
+			given(_factory.newTextAreaBinder()).willReturn(_textAreaBinder);
 			given(_factory.newValidationBinder()).willReturn(_validationBinder);
 			
 			_binder = new FormBinder();
@@ -106,6 +110,28 @@ package org.compaction.binder {
 		}
 		public function testFormTextInputWithIdIsBoundToValidator(): void {
 			var input:TextInput = textField("nameInput");
+			_target.addChild(input);
+			
+			_binder.source = _source;
+			_binder.target = _target;
+			
+			verify().that(_validationBinder.source = _source.adapter);
+			verify().that(_validationBinder.key = "name");
+			verify().that(_validationBinder.target = input);
+		}
+		public function testFormTextAreaWithIdIsBound(): void {
+			var input:TextArea = textAreaField("nameInput");
+			_target.addChild(input);
+			
+			_binder.source = _source;
+			_binder.target = _target;
+			
+			verify().that(_textAreaBinder.source = _source);
+			verify().that(_textAreaBinder.property = "edited.name");
+			verify().that(_textAreaBinder.target = input);
+		}
+		public function testFormTextAreaWithIdIsBoundToValidator(): void {
+			var input:TextArea = textAreaField("nameInput");
 			_target.addChild(input);
 			
 			_binder.source = _source;
@@ -184,6 +210,7 @@ package org.compaction.binder {
 		public function testCommitEventDefaultCanBeOverriden(): void {
 			_target.addChild(comboField("fooInput"));
 			_target.addChild(textField("fooInput"));
+			_target.addChild(textAreaField("fooInput"));
 			_target.addChild(dateField("fooInput"));
 			_target.addChild(checkField("fooInput"));
 			
@@ -193,6 +220,7 @@ package org.compaction.binder {
 			
 			verify().that(_comboBinder.commitEvent = FocusEvent.FOCUS_OUT);
 			verify().that(_textBinder.commitEvent = FocusEvent.FOCUS_OUT);
+			verify().that(_textAreaBinder.commitEvent = FocusEvent.FOCUS_OUT);
 			verify().that(_dateBinder.commitEvent = FocusEvent.FOCUS_OUT);
 			verify().that(_booleanBinder.commitEvent = FocusEvent.FOCUS_OUT);
 		}
@@ -253,6 +281,16 @@ package org.compaction.binder {
 			
 			verify().that(_textBinder.release());
 		}
+		public function testTextAreaBinderCanBeUnbound(): void {
+			_target.addChild(textAreaField("fooInput"));
+			
+			_binder.source = _source;
+			_binder.target = _target;
+			
+			_binder.release();
+			
+			verify().that(_textAreaBinder.release());
+		}
 		public function testComboBinderCanBeUnbound(): void {
 			_target.addChild(comboField("fooInput"));
 			
@@ -276,6 +314,9 @@ package org.compaction.binder {
 		}
 		private function textField(id:String): TextInput {
 			return setId(id, new TextInput());
+		}
+		private function textAreaField(id:String): TextArea {
+			return setId(id, new TextArea());
 		}
 		private function dateField(id:String): DateField {
 			return setId(id, new DateField());

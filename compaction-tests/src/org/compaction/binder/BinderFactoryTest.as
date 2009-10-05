@@ -8,6 +8,9 @@ package org.compaction.binder {
 		public function testNewTextBinderCreatesTextBinder(): void {
 			assertEquals(true, new BinderFactory().newTextBinder() is TextBinder);
 		}
+		public function testNewTextAreaBinderCreatesTextAreaBinder(): void {
+			assertEquals(true, new BinderFactory().newTextAreaBinder() is TextAreaBinder);
+		}
 		public function testNewDateBinderCreatesDateBinder(): void {
 			assertEquals(true, new BinderFactory().newDateBinder() is DateBinder);
 		}
