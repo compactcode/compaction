@@ -66,7 +66,7 @@ package org.compaction.model {
 			
 			_save = new SimpleAction(function():void {
 				setSaving(true);
-				_saveOperation.execute(
+				_saveOperation.save(
 					_edited, 
 					function(): void {setSaving(false); setEdited(edited);}, 
 					function(): void {setSaving(false);}

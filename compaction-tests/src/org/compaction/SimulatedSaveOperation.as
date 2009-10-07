@@ -6,7 +6,7 @@ package org.compaction {
 		public var simulating:Boolean = false;
 		public var simulateSuccess:Function;
 		public var simulateFail:Function;
-		public function execute(item:Object, onSuccess:Function, onFail:Function): void {
+		public function save(item:Object, onSuccess:Function, onFail:Function): void {
 			simulating = true;
 			simulateSuccess = function(): void {
 				simulating = false;

@@ -9,7 +9,7 @@ package org.compaction {
 		public function StubSaveOperation(type:int) {
 			this.type = type;
 		}
-		public function execute(item:Object, onSuccess:Function, onFail:Function): void {
+		public function save(item:Object, onSuccess:Function, onFail:Function): void {
 			if(type == SUCCESS) {
 				onSuccess();
 			} else if(type == FAIL) {
