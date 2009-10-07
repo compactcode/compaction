@@ -16,7 +16,7 @@ package org.compaction.model {
 		 * This is where you plug in your save logic.
 		 * @param operation The operation you want to use to save your edited object.
 		 */
-		function set saveOperation(operation:IItemOperation): void;
+		function set saveOperation(operation:ISaveOperation): void;
 		
 		/**
 		 * This is where you plug in your validation logic. 

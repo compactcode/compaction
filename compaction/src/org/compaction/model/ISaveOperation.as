@@ -12,7 +12,7 @@ package org.compaction.model {
 	 * 
 	 * @author shanonmcquay
 	 */
-	public interface IItemOperation {
+	public interface ISaveOperation {
 		/**
 		 * Perform the operation on the given object.
 		 * 

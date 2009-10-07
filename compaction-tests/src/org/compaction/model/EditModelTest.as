@@ -7,8 +7,8 @@ package org.compaction.model {
 	import org.compaction.BindableCustomer;
 	import org.compaction.InvocationRecorder;
 	import org.compaction.NonBindableCustomer;
-	import org.compaction.SimulatedSaveStrategy;
-	import org.compaction.StubItemOperation;
+	import org.compaction.SimulatedSaveOperation;
+	import org.compaction.StubSaveOperation;
 	import org.compaction.StubValidator;
 	
 	public class EditModelTest extends TestCase {
@@ -112,7 +112,7 @@ package org.compaction.model {
 		public function testSavingIsTrueWhileStrategySaveIsExecuting(): void {
 			_model.edit.execute(new BindableCustomer()); 
 			_model.edited.name = "shanon";
-			_model.saveOperation = new StubItemOperation(StubItemOperation.WAIT);
+			_model.saveOperation = new StubSaveOperation(StubSaveOperation.WAIT);
 			_model.save.execute();
 			assertEquals(true, _model.saving.currentValue);
 		}
@@ -120,7 +120,7 @@ package org.compaction.model {
 		public function testSavingIsFalseAfterStrategySaveSuccess(): void {
 			_model.edit.execute(new BindableCustomer()); 
 			_model.edited.name = "shanon";
-			_model.saveOperation = new StubItemOperation(StubItemOperation.SUCCESS);
+			_model.saveOperation = new StubSaveOperation(StubSaveOperation.SUCCESS);
 			_model.save.execute();
 			assertEquals(false, _model.saving.currentValue);
 		}
@@ -128,7 +128,7 @@ package org.compaction.model {
 		public function testSavingIsFalseAfterStrategySaveFails(): void {
 			_model.edit.execute(new BindableCustomer()); 
 			_model.edited.name = "shanon";
-			_model.saveOperation = new StubItemOperation(StubItemOperation.FAIL);
+			_model.saveOperation = new StubSaveOperation(StubSaveOperation.FAIL);
 			_model.save.execute();
 			assertEquals(false, _model.saving.currentValue);
 		}
@@ -246,7 +246,7 @@ package org.compaction.model {
 		public function testSaveActionSetsChangedToFalseIfStrategyCompletesSuccessfully(): void {
 			_model.edit.execute(new BindableCustomer()); 
 			_model.edited.name = "shanon";
-			_model.saveOperation = new StubItemOperation(StubItemOperation.SUCCESS);
+			_model.saveOperation = new StubSaveOperation(StubSaveOperation.SUCCESS);
 			_model.save.execute();
 			assertEquals(false, _model.changed.currentValue);
 		}
@@ -254,13 +254,13 @@ package org.compaction.model {
 		public function testSaveActionSetsChangedRemainsTrueIfStrategyCompletesUnsuccessfully(): void {
 			_model.edit.execute(new BindableCustomer()); 
 			_model.edited.name = "shanon";
-			_model.saveOperation = new StubItemOperation(StubItemOperation.FAIL);
+			_model.saveOperation = new StubSaveOperation(StubSaveOperation.FAIL);
 			_model.save.execute();
 			assertEquals(true, _model.changed.currentValue);			
 		}
 		
 		public function testChangesMadeDuringSaveActionAreBindableWhenStrategyCompletes(): void {
-			var simulation:SimulatedSaveStrategy = new SimulatedSaveStrategy();
+			var simulation:SimulatedSaveOperation = new SimulatedSaveOperation();
 			_model.saveOperation = simulation;
 			_model.edit.execute(new BindableCustomer());
 			_model.edited.name = "shanon"; 

@@ -1,8 +1,8 @@
 package org.compaction {
-	import org.compaction.model.IItemOperation;
+	import org.compaction.model.ISaveOperation;
 	
 	[Bindable] 
-	public class SimulatedSaveStrategy implements IItemOperation {
+	public class SimulatedSaveOperation implements ISaveOperation {
 		public var simulating:Boolean = false;
 		public var simulateSuccess:Function;
 		public var simulateFail:Function;

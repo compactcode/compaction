@@ -41,7 +41,7 @@ package org.compaction.model {
 		private var _cancel:SimpleAction;
 		
 		private var _changeDetector:IChangeDetector = new CloningChangeDetector();
-		private var _saveOperation:IItemOperation;
+		private var _saveOperation:ISaveOperation;
 		private var _validatorAdapter:ValidatorAdapter = new ValidatorAdapter();
 		
 		public function EditModel() {
@@ -78,7 +78,7 @@ package org.compaction.model {
 			_save.availableWhenTrue(valid);
 		}
 		
-		public function set saveOperation(operation:IItemOperation): void {
+		public function set saveOperation(operation:ISaveOperation): void {
 			_saveOperation = operation;
 		}
 		

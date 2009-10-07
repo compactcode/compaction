@@ -17,7 +17,7 @@
 <classEntry path="org.compaction.utils.StringUtils"/>
 <classEntry path="org.compaction.model.IEditModel"/>
 <classEntry path="org.compaction.validation.ValidationRoutines"/>
-<classEntry path="org.compaction.model.IItemOperation"/>
+<classEntry path="org.compaction.model.ISaveOperation"/>
 <classEntry path="org.compaction.validation.impl.ValidatorAdapter"/>
 <classEntry path="org.compaction.validation.INumberValidationBuilder"/>
 <classEntry path="org.compaction.binder.IBinder"/>
