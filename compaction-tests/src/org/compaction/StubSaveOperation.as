@@ -1,7 +1,10 @@
 package org.compaction {
-	import org.compaction.model.ISaveOperation;
+	import mx.rpc.AbstractOperation;
+	import mx.rpc.AsyncToken;
+	import mx.rpc.events.FaultEvent;
+	import mx.rpc.events.ResultEvent;
 	
-	public class StubSaveOperation implements ISaveOperation {
+	public class StubSaveOperation extends AbstractOperation {
 		public static const SUCCESS:int = 1;
 		public static const FAIL:int = 2;
 		public static const WAIT:int = 3;
@@ -9,12 +12,13 @@ package org.compaction {
 		public function StubSaveOperation(type:int) {
 			this.type = type;
 		}
-		public function save(item:Object, onSuccess:Function, onFail:Function): void {
+		override public function send(... args:Array):AsyncToken {
 			if(type == SUCCESS) {
-				onSuccess();
+				dispatchEvent(new ResultEvent(ResultEvent.RESULT));
 			} else if(type == FAIL) {
-				onFail();
+				dispatchEvent(new FaultEvent(FaultEvent.FAULT));
 			}
+			return null;
 		}
 	}
 }

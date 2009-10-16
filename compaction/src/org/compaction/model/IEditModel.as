@@ -1,4 +1,6 @@
 package org.compaction.model {
+	import mx.rpc.AbstractOperation;
+	
 	import org.compaction.action.IItemAction;
 	import org.compaction.action.ISimpleAction;
 	import org.compaction.condition.ICondition;
@@ -13,10 +15,11 @@ package org.compaction.model {
 	public interface IEditModel {
 		
 		/**
-		 * This is where you plug in your save logic.
-		 * @param operation The operation you want to use to save your edited object.
+		 * The operation you want to use to save your edited object.
+		 * @param operation send(edited);
 		 */
-		function set saveOperation(operation:ISaveOperation): void;
+		function set saveOperation(operation:AbstractOperation): void;
+		function get saveOperation():AbstractOperation;
 		
 		/**
 		 * This is where you plug in your validation logic. 
@@ -74,6 +77,11 @@ package org.compaction.model {
 		 * @return The changed condition.
 		 */
 		function get changed():ICondition;
+		
+		/**
+		 * Ignore all current changes that have been made to the edited object.
+		 */
+		function ignoreCurrentChanges(): void;
 		
 		/**
 		 * The condition that represents whether the edited object has passed all validaitons.

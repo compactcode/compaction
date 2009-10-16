@@ -5,6 +5,9 @@ package org.compaction.model {
 	import mx.events.PropertyChangeEvent;
 	import mx.resources.IResourceManager;
 	import mx.resources.ResourceManager;
+	import mx.rpc.AbstractOperation;
+	import mx.rpc.events.FaultEvent;
+	import mx.rpc.events.ResultEvent;
 	
 	import org.compaction.action.IItemAction;
 	import org.compaction.action.ISimpleAction;
@@ -41,7 +44,7 @@ package org.compaction.model {
 		private var _cancel:SimpleAction;
 		
 		private var _changeDetector:IChangeDetector = new CloningChangeDetector();
-		private var _saveOperation:ISaveOperation;
+		private var _saveOperation:AbstractOperation;
 		private var _validatorAdapter:ValidatorAdapter = new ValidatorAdapter();
 		
 		public function EditModel() {
@@ -66,11 +69,7 @@ package org.compaction.model {
 			
 			_save = new SimpleAction(function():void {
 				setSaving(true);
-				_saveOperation.save(
-					_edited, 
-					function(): void {setSaving(false); setEdited(edited);}, 
-					function(): void {setSaving(false);}
-				);
+				_saveOperation.send(_edited);
 			});
 			_save.availableWhenFalse(saving);
 			_save.availableWhenTrue(editing);
@@ -78,8 +77,20 @@ package org.compaction.model {
 			_save.availableWhenTrue(valid);
 		}
 		
-		public function set saveOperation(operation:ISaveOperation): void {
+		public function set saveOperation(operation:AbstractOperation): void {
 			_saveOperation = operation;
+			_saveOperation.addEventListener(
+				ResultEvent.RESULT,
+				function(): void {setSaving(false); ignoreCurrentChanges();}
+			);
+			_saveOperation.addEventListener(
+				FaultEvent.FAULT,
+				function(): void {setSaving(false);}
+			);
+		}
+		
+		public function get saveOperation(): AbstractOperation {
+			return _saveOperation;
 		}
 		
 		public function set validator(validator:IValidator): void {
@@ -112,6 +123,10 @@ package org.compaction.model {
 		
 		public function get changed():ICondition {
 			return _changed;
+		}
+		
+		public function ignoreCurrentChanges(): void {
+			setEdited(_edited);
 		}
 		
 		public function get valid():ICondition {

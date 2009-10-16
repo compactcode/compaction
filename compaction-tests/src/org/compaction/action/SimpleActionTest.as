@@ -7,5 +7,12 @@ package org.compaction.action {
 			action.execute();
 			assertEquals(true, invoked);
 		}
+		public function testExecuteInvokesBeforeFunction(): void {
+			var invoked:Boolean = false;
+			var action:ISimpleAction = new SimpleAction(function(): void {});
+			action.beforeExecute(function(): void {invoked = true});
+			action.execute();
+			assertEquals(true, invoked);
+		}
 	}
 }

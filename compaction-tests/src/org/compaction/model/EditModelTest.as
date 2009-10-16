@@ -7,7 +7,6 @@ package org.compaction.model {
 	import org.compaction.BindableCustomer;
 	import org.compaction.InvocationRecorder;
 	import org.compaction.NonBindableCustomer;
-	import org.compaction.SimulatedSaveOperation;
 	import org.compaction.StubSaveOperation;
 	import org.compaction.StubValidator;
 	
@@ -257,18 +256,6 @@ package org.compaction.model {
 			_model.saveOperation = new StubSaveOperation(StubSaveOperation.FAIL);
 			_model.save.execute();
 			assertEquals(true, _model.changed.currentValue);			
-		}
-		
-		public function testChangesMadeDuringSaveActionAreBindableWhenStrategyCompletes(): void {
-			var simulation:SimulatedSaveOperation = new SimulatedSaveOperation();
-			_model.saveOperation = simulation;
-			_model.edit.execute(new BindableCustomer());
-			_model.edited.name = "shanon"; 
-			_model.save.execute();
-			var recorder:InvocationRecorder = new InvocationRecorder();
-			ChangeWatcher.watch(_model, "edited", recorder.invocationRecorder);
-			simulation.simulateSuccess();
-			assertEquals(1, recorder.invocationCount);
 		}
 		
 		// -- Random

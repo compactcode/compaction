@@ -5,6 +5,7 @@ package org.compaction.action {
 	 * @author shanonmcquay
 	 */
 	public interface ISimpleAction extends IAction {
+		function beforeExecute(listener:Function): void;
 		function execute(): void;
 	}
 }
